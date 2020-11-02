@@ -17,11 +17,28 @@ struct ContentView: View {
     var body: some View {
         Group {
             if (session.session != nil) {
-                Account()
+                HomeView()
             } else {
                 SignInView()
             }
         }.onAppear(perform: getUser)
+    }
+}
+
+struct HomeView: View {
+    @State private var selection = 0
+    
+    var body: some View {
+        TabView {
+            Text("Home").tabItem{VStack{
+                Image(systemName: "mappin.and.ellipse")
+                Text("Sessions")
+            }}.tag(0)
+            Account().tabItem{VStack{
+                Image(systemName: "person.circle.fill")
+                Text("Settings")
+            }}.tag(1)
+        }
     }
 }
 
