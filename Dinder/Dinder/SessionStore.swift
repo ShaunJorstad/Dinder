@@ -52,6 +52,13 @@ class SessionStore : ObservableObject {
         ) {
         Auth.auth().signIn(withEmail: email, password: password, completion: handler)
     }
+    
+    func sendPasswordResetEmail(
+        email: String,
+        handler: @escaping (Error?) -> Void
+        ) {
+        Auth.auth().sendPasswordReset(withEmail: email, completion: handler)
+    }
 
     func signOut () -> Bool {
         do {
