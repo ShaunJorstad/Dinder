@@ -58,6 +58,7 @@ class SessionStore : ObservableObject {
         handler: @escaping (Error?) -> Void
         ) {
         Auth.auth().sendPasswordReset(withEmail: email, completion: handler)
+        self.session = nil
     }
 
     func signOut () -> Bool {
@@ -67,6 +68,17 @@ class SessionStore : ObservableObject {
             return true
         } catch {
             return false
+        }
+    }
+    
+    func delete () {
+        let user = Auth.auth().currentUser
+        user?.delete { error in
+            if let error = error {
+                
+            } else {
+                self.session = nil
+            }
         }
     }
     
