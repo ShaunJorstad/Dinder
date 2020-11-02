@@ -14,6 +14,7 @@ struct SignInView : View {
     @State var confirmPassword: String = ""
     @State var loading = false
     @State var error = false
+    @State var errorMessage: String = ""
     @State var signin = true
     
     @EnvironmentObject var session: SessionStore
@@ -25,7 +26,7 @@ struct SignInView : View {
             self.loading = false
             if error != nil {
                 self.error = true
-                self.email = error.debugDescription
+                self.errorMessage = error.debugDescription
             } else {
                 self.email = ""
                 self.password = ""
@@ -40,7 +41,7 @@ struct SignInView : View {
             self.loading = false
             if error != nil {
                 self.error = true
-                self.email = error.debugDescription
+                self.errorMessage = error.debugDescription
             } else {
                 self.email = ""
                 self.password = ""
@@ -54,9 +55,6 @@ struct SignInView : View {
                 VStack {
                     TextField("email", text: $email)
                     SecureField("password", text: $password)
-                    if (error) {
-                        Text("ahhh crap")
-                    }
                     Button(action: {
                         signIn()
                     }) {
@@ -67,15 +65,14 @@ struct SignInView : View {
                     }) {
                         Text("Sign Up")
                     }
+                }.alert(isPresented: $error) {
+                    Alert(title: Text("authentication error"), message: Text("\(errorMessage)"), dismissButton: .default(Text("dismiss")) )
                 }
             } else {
                 VStack {
                     TextField("email", text: $email)
                     SecureField("password", text: $password)
                     SecureField("confirm password", text: $confirmPassword)
-                    if (error) {
-                        Text("ahhh crap")
-                    }
                     Button(action: {
                         if (self.password == self.confirmPassword) {
                             signUp()
@@ -86,8 +83,10 @@ struct SignInView : View {
                     Button(action: {
                         self.signin = true
                     }) {
-                        Text("cancle")
+                        Text("cancel")
                     }
+                }.alert(isPresented: $error) {
+                    Alert(title: Text("authentication error"), message: Text("\(errorMessage)"), dismissButton: .default(Text("dismiss")) )
                 }
             }
         }
