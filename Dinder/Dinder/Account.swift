@@ -12,11 +12,13 @@ struct Account: View {
     @EnvironmentObject var session: SessionStore
 
     var body: some View {
-        Text(session.getEmail())
-        Button(action: {
-            session.signOut()
-        }) {
-            Text("sign out")
+        VStack {
+            Text(session.getEmail())
+            Button(action: {
+                session.signOut()
+            }) {
+                Text("sign out")
+            }
         }
     }
 }
