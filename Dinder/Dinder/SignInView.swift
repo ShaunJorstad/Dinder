@@ -8,14 +8,27 @@
 import Foundation
 import SwiftUI
 
+struct AlertId: Identifiable {
+    
+    var id: AlertType
+    
+    enum AlertType {
+        case invalidEmail
+        case confirmReset
+    }
+}
+
 struct SignInView : View {
     @State var email: String = ""
     @State var password: String = ""
     @State var confirmPassword: String = ""
     @State var loading = false
     @State var error = false
+    @State var errorTitle: String = ""
     @State var errorMessage: String = ""
+    @State var alertId: AlertId?
     @State var state: String = "onboard"
+    @State var resetPasswordPrompt = false
     
     @EnvironmentObject var session: SessionStore
     
@@ -41,11 +54,34 @@ struct SignInView : View {
             self.loading = false
             if error != nil {
                 self.error = true
+                self.errorTitle = "authentication error"
                 self.errorMessage = error.debugDescription
             } else {
                 self.email = ""
                 self.password = ""
             }
+        }
+    }
+    
+    func resetPassword() {
+        session.sendPasswordResetEmail(email: email) { (error) in
+            self.loading = false
+            if error != nil {
+                self.error = true
+                self.errorTitle = "authentication error"
+                self.errorMessage = error.debugDescription
+            }
+        }
+    }
+    
+    private func createAlert(alertId: AlertId) -> Alert {
+        switch alertId.id {
+        case .invalidEmail:
+            return Alert(title: Text("Can't reset email"), message: Text("please enter email in email field"), dismissButton: .default(Text("dismiss")))
+        case .confirmReset:
+            return Alert(title: Text("Confirm reset"), message: Text("A password recovery email will be sent to \(email)"), primaryButton: .destructive(Text("reset")) {
+                resetPassword()
+            }, secondaryButton: .cancel() )
         }
     }
     
@@ -97,6 +133,18 @@ struct SignInView : View {
                             .frame(width: 304, height: 60)
                             .background(Color(hex: "F2F7FC"))
                             .cornerRadius(8.0)
+                        Button(action: {
+                            if (self.email == "") {
+                                self.alertId = AlertId(id: .invalidEmail)
+                            } else {
+                                self.alertId = AlertId(id: .confirmReset)
+                            }
+                        }) {
+                            Text("recover password")
+                                .frame(width: 300, alignment: .leading)
+                        }.alert(item: $alertId) { (alertId) -> Alert in
+                            createAlert(alertId: alertId)
+                        }
                     }
                     Spacer()
                         .frame(height: 118.0)
@@ -112,6 +160,8 @@ struct SignInView : View {
                                 .background(Color(hex: "2F4858"))
                                 .cornerRadius(12.0)
                                 .foregroundColor(.white)
+                        }.alert(isPresented: $error) {
+                            Alert(title: Text("\(errorTitle)"), message: Text("\(errorMessage)"), dismissButton: .default(Text("dismiss")) )
                         }
                         Button(action: {
                             withAnimation {
@@ -122,8 +172,6 @@ struct SignInView : View {
                         }
                     }
                     Spacer()
-                }.alert(isPresented: $error) {
-                    Alert(title: Text("authentication error"), message: Text("\(errorMessage)"), dismissButton: .default(Text("dismiss")) )
                 }
             } else {
                 VStack {
@@ -158,6 +206,9 @@ struct SignInView : View {
                                 withAnimation {
                                     signUp()
                                 }
+                            } else {
+                                self.error = true
+                                self.errorMessage = "Passwords did not match"
                             }
                         }) {
                             Text("Join")
