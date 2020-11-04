@@ -97,7 +97,6 @@ class SessionStore : ObservableObject {
             "likes": likesDict,
             "result": ""
         ])
-        startSession()
     }
     
     func getEmail() -> String {
