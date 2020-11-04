@@ -8,6 +8,7 @@ target 'Dinder' do
   # Pods for Dinder
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
 
   target 'DinderTests' do
     inherit! :search_paths

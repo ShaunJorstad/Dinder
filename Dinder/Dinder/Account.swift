@@ -58,6 +58,17 @@ struct Account: View {
                 }, secondaryButton: .cancel() )
             }
             
+            Button(action: {
+                session.createSession()
+            }) {
+                Text("Create session: \(session.sessionCode ?? 0)")
+            }
+            Button(action: {
+                session.joinSession()
+            }) {
+                Text("Join session:")
+            }
+            
             Spacer()
         }
     }

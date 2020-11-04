@@ -8,12 +8,97 @@
 import Foundation
 import SwiftUI
 import Firebase
+import FirebaseCore
+import FirebaseFirestore
 import Combine
 
 class SessionStore : ObservableObject {
+    let db = Firestore.firestore()
     var didChange = PassthroughSubject<SessionStore, Never>()
     @Published var session: User? { didSet { self.didChange.send(self) }}
     var handle: AuthStateDidChangeListenerHandle?
+    @Published var sessionCode: Int? = nil
+    @Published var numParticipants: Int = 0
+    @Published var sessionLive = false
+    @Published var result = ""
+    
+    func joinSession() {
+        db.collection("Sessions").document("\(sessionCode!)").updateData([
+            "participants": FieldValue.increment(Int64()),
+            "likes.\(self.session!.uid)": []
+        ])
+        watchSession()
+    }
+    
+    func endSession() {
+        db.collection("Sessions").document("\(sessionCode!)").updateData([
+            "live": false
+        ])
+    }
+    
+    func calcResult() {
+        //TODO: calculate the result and push that to the database
+    }
+    
+    func startSession() {
+        db.collection("Sessions").document("\(sessionCode!)").updateData([
+            "live": true
+        ])
+        watchSession()
+    }
+    
+    func watchSession() {
+        db.collection("Sessions").document("\(sessionCode!)")
+            .addSnapshotListener { documentSnapshot, error in
+              guard let document = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+              }
+              guard let data = document.data() else {
+                print("Document data was empty.")
+                return
+              }
+                
+              print("Current data: \(data["live"])")
+                if let live = data["live"], live as! Bool != self.sessionLive {
+                    self.sessionLive = live as! Bool
+                }
+                if let participants = data["participants"] {
+                    self.numParticipants = (participants as! Int)
+                }
+                if let result = data["result"], result as! String != "" {
+                    self.result = result as! String
+                }
+            }
+    }
+    
+    func updateSessionTime(time: Int) {
+        db.collection("Sessions").document("\(sessionCode!)").updateData([
+            "time": time
+        ])
+    }
+    
+    func updateSessionRadius(radius: Int) {
+        db.collection("Sessions").document("\(sessionCode!)").updateData([
+            "radius": radius
+        ])
+    }
+    
+    func createSession() {
+        self.sessionCode = Int.random(in: 1000...9999)
+        var likesDict: [String: [String]] = [:]
+        likesDict["\(session!.uid)"] = []
+        db.collection("Sessions").document("\(sessionCode!)").setData([
+            "code": "\(sessionCode!)",
+            "radius": 25,
+            "time": 5,
+            "participants": 0,
+            "live": false,
+            "likes": likesDict,
+            "result": ""
+        ])
+        startSession()
+    }
     
     func getEmail() -> String {
         return session?.email ?? "no specified user"
