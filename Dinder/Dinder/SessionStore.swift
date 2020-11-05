@@ -142,7 +142,7 @@ class SessionStore : ObservableObject {
         handler: @escaping (Error?) -> Void
         ) {
         Auth.auth().sendPasswordReset(withEmail: email, completion: handler)
-        self.session = nil
+        signOut()
     }
 
     func signOut () -> Bool {
