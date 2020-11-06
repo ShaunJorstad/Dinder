@@ -21,13 +21,38 @@ class SessionStore : ObservableObject {
     @Published var numParticipants: Int = 0
     @Published var sessionLive = false
     @Published var result = ""
+    @Published var sessionError: String? = nil
     
-    func joinSession() {
-        db.collection("Sessions").document("\(sessionCode!)").updateData([
+    func joinSession(joinCode: Int) {
+        db.collection("Sessions").document("\(joinCode)").updateData([
             "participants": FieldValue.increment(Int64()),
             "likes.\(self.session!.uid)": []
-        ])
+        ]) { err in
+            if let err = err {
+                self.sessionError = "Error: could not join the session"
+            } else {
+                self.sessionCode = joinCode
+            }
+        }
         watchSession()
+    }
+    
+    func leaveSession() {
+        if let code = self.sessionCode {
+            db.collection("Sessions").document("\(code)").updateData([
+                "participants": FieldValue.increment(Int64(-1)),
+                "likes.\(self.session!.uid)": FieldValue.delete()
+            ]) { err in
+                if let err = err {
+                    self.sessionError = "Error: could not leave the session"
+                } else {
+                    self.sessionCode = nil
+                    self.numParticipants = 0
+                    self.sessionLive = false
+                    self.result = ""
+                }
+            }
+        }
     }
     
     func deleteSession() {
