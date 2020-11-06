@@ -32,7 +32,9 @@ class SessionStore : ObservableObject {
             if err != nil {
                 self.sessionError = "Error: could not join the session"
             } else {
-                self.sessionCode = joinCode
+                withAnimation {
+                    self.sessionCode = joinCode
+                }
                 self.watchSession()
             }
         }
@@ -47,10 +49,12 @@ class SessionStore : ObservableObject {
                 if err != nil {
                     self.sessionError = "Error: could not leave the session"
                 } else {
-                    self.sessionCode = nil
-                    self.numParticipants = 0
-                    self.sessionLive = false
-                    self.result = ""
+                    withAnimation {
+                        self.sessionCode = nil
+                        self.numParticipants = 0
+                        self.sessionLive = false
+                        self.result = ""
+                    }
                 }
             }
         }
@@ -63,10 +67,12 @@ class SessionStore : ObservableObject {
                     print("Error removing document: \(err)")
                 } else {
                     print("Document successfully removed!")
-                    self.sessionCode = nil
-                    self.numParticipants = 0
-                    self.sessionLive = false
-                    self.result = ""
+                    withAnimation {
+                        self.sessionCode = nil
+                        self.numParticipants = 0
+                        self.sessionLive = false
+                        self.result = ""
+                    }
                 }
             }
         }
@@ -97,23 +103,31 @@ class SessionStore : ObservableObject {
                 return
               }
               guard let data = document.data() else {
-                self.sessionCode = nil
-                self.numParticipants = 0
-                self.result = ""
-                self.sessionError = "Session deleted"
-                self.sessionDeleted = true
+                withAnimation {
+                    self.sessionCode = nil
+                    self.numParticipants = 0
+                    self.result = ""
+                    self.sessionError = "Session deleted"
+                    self.sessionDeleted = true
+                }
                 return
               }
                 
                 print("Current data: \(data["live"] ?? "did not exist")")
                 if let live = data["live"], live as! Bool != self.sessionLive {
-                    self.sessionLive = live as! Bool
+                    withAnimation {
+                        self.sessionLive = live as! Bool
+                    }
                 }
                 if let participants = data["participants"] {
-                    self.numParticipants = (participants as! Int)
+                    withAnimation {
+                        self.numParticipants = (participants as! Int)
+                    }
                 }
                 if let result = data["result"], result as! String != "" {
-                    self.result = result as! String
+                    withAnimation {
+                        self.result = result as! String
+                    }
                 }
             }
     }
