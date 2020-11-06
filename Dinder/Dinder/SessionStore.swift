@@ -30,6 +30,22 @@ class SessionStore : ObservableObject {
         watchSession()
     }
     
+    func deleteSession() {
+        if let code = sessionCode {
+            db.collection("Sessions").document("\(code)").delete() { err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                } else {
+                    print("Document successfully removed!")
+                    self.sessionCode = nil
+                    self.numParticipants = 0
+                    self.sessionLive = false
+                    self.result = ""
+                }
+            }
+        }
+    }
+    
     func endSession() {
         db.collection("Sessions").document("\(sessionCode!)").updateData([
             "live": false
