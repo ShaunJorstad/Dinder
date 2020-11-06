@@ -19,14 +19,10 @@ struct CreateSession: View {
                 VStack {
                     Spacer()
                     Text("Share this code:")
-                        .font(.largeTitle)
-                        .fontWeight(.black)
-                        .foregroundColor(Color(hex: "2F4858"))
+                        .dinderTitleStyle()
                     if let code = session.sessionCode {
                         Text(verbatim: "\(code)")
-                            .font(.largeTitle)
-                            .fontWeight(.black)
-                            .foregroundColor(Color(hex: "2F4858"))
+                            .dinderTitleStyle()
                     } else {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle())
@@ -35,31 +31,27 @@ struct CreateSession: View {
                     Spacer()
                     HStack {
                         Text("Travel Radius:")
-                            .fontWeight(.black)
-                            .foregroundColor(Color(hex: "2F4858"))
+                            .dinderRegularStyle()
                         Stepper(value: $radius, in: 1...100) {
                             Text("\(radius) mile")
-                                .fontWeight(.black)
-                                .foregroundColor(Color(hex: "2F4858"))
+                                .dinderRegularStyle()
                         }
                     }.padding()
                     HStack {
                         Text("Time Limit:")
-                            .fontWeight(.black)
-                            .foregroundColor(Color(hex: "2F4858"))
+                            .dinderRegularStyle()
                         Stepper(value: $timeLimit, in: 1...10) {
                             Text("\(timeLimit) minutes")
-                                .fontWeight(.black)
-                                .foregroundColor(Color(hex: "2F4858"))
+                                .dinderRegularStyle()
                         }
                     }.padding()
                     Spacer()
                     Text("Party of \(session.numParticipants)")
+                        .dinderRegularStyle()
                     Button(action: {
                         session.updateSessionTime(time: timeLimit)
                         session.updateSessionRadius(radius: radius)
                         session.startSession()
-                        //TODO go to next view
                     }) {
                         Text("Start")
                     }.disabled(session.sessionCode == nil)

@@ -18,9 +18,7 @@ struct Account: View {
             Group {
                 Spacer()
                 Text("Settings")
-                    .font(.largeTitle)
-                    .fontWeight(.black)
-                    .foregroundColor(Color(hex: "2F4858"))
+                    .dinderTitleStyle()
                 Spacer()
             }
             Button(action: {

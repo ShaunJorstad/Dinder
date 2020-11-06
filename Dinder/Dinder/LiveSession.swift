@@ -19,9 +19,7 @@ struct LiveSession: View {
     var body: some View {
         Group {
             Text("Session just started!")
-                .font(.largeTitle)
-                .fontWeight(.black)
-                .foregroundColor(Color(hex: "2F4858"))
+                .dinderTitleStyle()
         }
         .onDisappear {
             if (session.sessionCode != nil && self.creator) {

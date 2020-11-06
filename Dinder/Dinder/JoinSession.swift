@@ -22,15 +22,10 @@ struct JoinSession: View {
                 VStack {
                     Spacer()
                     Text("Enter Code")
-                        .font(.largeTitle)
-                        .fontWeight(.black)
-                        .foregroundColor(Color(hex: "2F4858"))
+                        .dinderTitleStyle()
                     Spacer()
                     TextField("code", text: $inputSessionCode)
-                        .padding()
-                        .frame(width: 304, height: 60)
-                        .background(Color(hex: "F2F7FC"))
-                        .cornerRadius(8.0)
+                        .textFieldStyle(DinderTextFieldStyle())
                     Button(action: {
                         session.joinSession(joinCode: getCode())
                     }) {
@@ -40,9 +35,7 @@ struct JoinSession: View {
                 }.buttonStyle(DinderButtonStyle())
             } else if (session.sessionCode != nil && !session.sessionLive) {
                 Text("Waiting for session to start")
-                    .font(.largeTitle)
-                    .fontWeight(.black)
-                    .foregroundColor(Color(hex: "2F4858"))
+                    .dinderTitleStyle()
             } else if (session.sessionCode != nil && session.sessionLive) {
                 LiveSession(created: false)
             }
