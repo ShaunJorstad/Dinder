@@ -36,7 +36,7 @@ struct Account: View {
                 }, secondaryButton: .cancel() )
             }
             Button(action: {
-                let result = session.signOut()
+                let _ = session.signOut()
             }) {
                 HStack {
                     Image(systemName: "square.and.arrow.up")

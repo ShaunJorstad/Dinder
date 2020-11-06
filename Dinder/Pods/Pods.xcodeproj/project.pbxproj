@@ -3298,6 +3298,7 @@
 		C0CEF246CB54C0C2959ED2395550E3CA /* sign.c in Sources */ = {isa = PBXBuildFile; fileRef = E38A0DB335AC8F07A038CD4DC0EC0DD5 /* sign.c */; settings = {COMPILER_FLAGS = "-DOPENSSL_NO_ASM -GCC_WARN_INHIBIT_ALL_WARNINGS -w -fno-objc-arc"; }; };
 		C0D39708F5E493FC364FC1312DB1BBED /* siphash.h in Headers */ = {isa = PBXBuildFile; fileRef = FC4B5B41E4A05F6D367D08933BADFD5D /* siphash.h */; };
 		C0E91770B9FC4B83C429FFB774659AB0 /* byte_buffer_reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 361CFD5BCE1FA111A4E4394040B6E717 /* byte_buffer_reader.h */; };
+		C0EF1530255615CB0043C428 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0EF152F255615CA0043C428 /* CoreServices.framework */; };
 		C0FAB3CD9489B6C4A0F831BD3F6727E8 /* load_balancer.upb.h in Headers */ = {isa = PBXBuildFile; fileRef = 41B2F83713F4D12F8D9C6420F098947C /* load_balancer.upb.h */; };
 		C0FBC8ECFBA2FDCD1C8B90358145F979 /* simple_query_engine.cc in Sources */ = {isa = PBXBuildFile; fileRef = FA9733D4BD14FC27DB8A649395BF552A /* simple_query_engine.cc */; settings = {COMPILER_FLAGS = "$(inherited) -Wreorder -Werror=reorder -Wno-comma -fno-objc-arc"; }; };
 		C1014A79803F1AE238EEB84AB1339719 /* tcp_server_utils_posix_ifaddrs.cc in Sources */ = {isa = PBXBuildFile; fileRef = 06EB0C8DE81AFCD567DE77B2982A27B0 /* tcp_server_utils_posix_ifaddrs.cc */; settings = {COMPILER_FLAGS = "-DGRPC_ARES=0 -Wno-comma -DGRPC_SHADOW_BORINGSSL_SYMBOLS -fno-objc-arc"; }; };
@@ -3915,7 +3916,6 @@
 		E7C99B6B77C3CB0B213106824B06446A /* iam_credentials.h in Headers */ = {isa = PBXBuildFile; fileRef = 330C05B371E179CA96514B60569CF90B /* iam_credentials.h */; };
 		E7DF03158EF749B152D50C3846B8C6DA /* ev_epollex_linux.h in Copy src/core/lib/iomgr Private Headers */ = {isa = PBXBuildFile; fileRef = F94A91848D1E73DE910BFF2198D92BF5 /* ev_epollex_linux.h */; };
 		E7ED56594232F9CBA4E31D7A1DEB5B70 /* async_generic_service.h in Copy impl/codegen Public Headers */ = {isa = PBXBuildFile; fileRef = 5C37D88012DF73045C0A1F7F91892E14 /* async_generic_service.h */; };
-		E7EFD8F9088F15A45C62F3DE323F7C72 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB5D3D661A2CC5CAE57C2F8ADBF11542 /* MobileCoreServices.framework */; };
 		E7FE9ED7E019A04B5DF04AC4605E100A /* secure_channel_create.cc in Sources */ = {isa = PBXBuildFile; fileRef = AAA13B1FE67DCE344396B5EF8B127B46 /* secure_channel_create.cc */; settings = {COMPILER_FLAGS = "-DGRPC_ARES=0 -Wno-comma -DGRPC_SHADOW_BORINGSSL_SYMBOLS -fno-objc-arc"; }; };
 		E801D703A59656C8304560972056A81C /* method_handler_impl.h in Copy impl Public Headers */ = {isa = PBXBuildFile; fileRef = 64ABD73AC5F57FAE5F0E96EA641D0FB3 /* method_handler_impl.h */; };
 		E805FE41C687053F7085041D69EEA7A2 /* GDTCORRegistrar.m in Sources */ = {isa = PBXBuildFile; fileRef = C947C18F8398D5D1D49335FCF2E93BD9 /* GDTCORRegistrar.m */; };
@@ -10959,6 +10959,7 @@
 		C0D84E0C299B167A1021B08D5FEEA521 /* FIRFacebookAuthProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRFacebookAuthProvider.h; path = FirebaseAuth/Sources/Public/FirebaseAuth/FIRFacebookAuthProvider.h; sourceTree = "<group>"; };
 		C0DFD1BAC912738FB0C9E5147DE0EA1B /* struct.upb.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = struct.upb.h; path = "src/core/ext/upb-generated/google/protobuf/struct.upb.h"; sourceTree = "<group>"; };
 		C0EF0E489BB44200981E9BAC03DECFB2 /* b64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = b64.h; path = src/core/lib/slice/b64.h; sourceTree = "<group>"; };
+		C0EF152F255615CA0043C428 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		C10E2DB2504652C4E09BB3E99B07FC20 /* FirebaseInstallationsInternal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FirebaseInstallationsInternal.h; path = FirebaseInstallations/Source/Library/Private/FirebaseInstallationsInternal.h; sourceTree = "<group>"; };
 		C162D7D97F69F52207A546A1A299E752 /* iterator.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = iterator.cc; path = table/iterator.cc; sourceTree = "<group>"; };
 		C171B009F1205CD12728905E255A6A6B /* bad_any_cast.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = bad_any_cast.h; path = absl/types/bad_any_cast.h; sourceTree = "<group>"; };
@@ -11787,9 +11788,9 @@
 				F3298EC062E1DC9F3F07EAB2054CE621 /* absl.framework in Frameworks */,
 				A169B46F7451B81C28DDEA257EC197D5 /* FirebaseCore.framework in Frameworks */,
 				66983183D37735C23DC6B4725DE5AB77 /* Foundation.framework in Frameworks */,
+				C0EF1530255615CB0043C428 /* CoreServices.framework in Frameworks */,
 				03308C33965A0275C914D8AB45CE402D /* grpcpp.framework in Frameworks */,
 				346F60810E17C9BD01E0CA8744684F4A /* leveldb.framework in Frameworks */,
-				E7EFD8F9088F15A45C62F3DE323F7C72 /* MobileCoreServices.framework in Frameworks */,
 				72896035F9F092AB85B81249C734CEB3 /* nanopb.framework in Frameworks */,
 				2946974BF0080B20FCD73BBC7F0BEEC4 /* SystemConfiguration.framework in Frameworks */,
 				ABD1B4C1A2A5AAF4EBB010C142300FFC /* UIKit.framework in Frameworks */,
@@ -12430,6 +12431,7 @@
 		30EA5A1497E3F50F81B8632286AABE03 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C0EF152F255615CA0043C428 /* CoreServices.framework */,
 				B1928392E39BD846F6A323249802DCCC /* absl.framework */,
 				30887450B2879C7382F56996D7868C7E /* FBLPromises.framework */,
 				EEBD9A079B22C6BD03CED9259245CF53 /* FirebaseCore.framework */,
