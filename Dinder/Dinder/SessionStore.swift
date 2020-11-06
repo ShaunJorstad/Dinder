@@ -22,6 +22,7 @@ class SessionStore : ObservableObject {
     @Published var sessionLive = false
     @Published var result = ""
     @Published var sessionError: String? = nil
+    @Published var sessionDeleted = false
     
     func joinSession(joinCode: Int) {
         db.collection("Sessions").document("\(joinCode)").updateData([
@@ -96,7 +97,11 @@ class SessionStore : ObservableObject {
                 return
               }
               guard let data = document.data() else {
-                print("Document data was empty.")
+                self.sessionCode = nil
+                self.numParticipants = 0
+                self.result = ""
+                self.sessionError = "Session deleted"
+                self.sessionDeleted = true
                 return
               }
                 
@@ -138,6 +143,7 @@ class SessionStore : ObservableObject {
             "likes": likesDict,
             "result": ""
         ])
+        watchSession()
     }
     
     func getEmail() -> String {
