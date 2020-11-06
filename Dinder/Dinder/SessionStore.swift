@@ -23,8 +23,6 @@ class SessionStore : ObservableObject {
     @Published var result = ""
     @Published var sessionError: String? = nil
     @Published var sessionDeleted = false
-    @Published var createdSession = false
-    @Published var joinedSession = false
     
     func joinSession(joinCode: Int) {
         db.collection("Sessions").document("\(joinCode)").updateData([
@@ -35,7 +33,6 @@ class SessionStore : ObservableObject {
                 self.sessionError = "Error: could not join the session"
             } else {
                 self.sessionCode = joinCode
-                self.joinedSession = true
                 self.watchSession()
             }
         }
@@ -54,7 +51,6 @@ class SessionStore : ObservableObject {
                     self.numParticipants = 0
                     self.sessionLive = false
                     self.result = ""
-                    self.joinedSession = false
                 }
             }
         }
@@ -71,7 +67,6 @@ class SessionStore : ObservableObject {
                     self.numParticipants = 0
                     self.sessionLive = false
                     self.result = ""
-                    self.createdSession = false
                 }
             }
         }
@@ -149,7 +144,6 @@ class SessionStore : ObservableObject {
             "result": ""
         ])
         watchSession()
-        self.createdSession = true
     }
     
     func getEmail() -> String {
