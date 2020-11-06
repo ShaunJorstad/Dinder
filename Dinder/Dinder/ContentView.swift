@@ -29,15 +29,21 @@ struct HomeView: View {
     @State private var selection = 0
     
     var body: some View {
-        TabView {
-            Text("Home").tabItem{VStack{
-                Image(systemName: "mappin.and.ellipse")
-                Text("Sessions")
-            }}.tag(0)
-            Account().tabItem{VStack{
-                Image(systemName: "person.circle.fill")
-                Text("Settings")
-            }}.tag(1)
+        NavigationView{
+            TabView {
+                VStack{
+                    NavigationLink(destination: CreateSession()){
+                        Text("Create Session")
+                    }
+                }.tabItem{VStack{
+                    Image(systemName: "mappin.and.ellipse")
+                    Text("Sessions")
+                }}.tag(0)
+                Account().tabItem{VStack{
+                    Image(systemName: "person.circle.fill")
+                    Text("Settings")
+                }}.tag(1)
+            }
         }
     }
 }
