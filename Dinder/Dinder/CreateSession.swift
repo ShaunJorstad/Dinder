@@ -52,6 +52,7 @@ struct CreateSession: View {
                 }
             }.padding()
             Spacer()
+            Text("Party of \(session.numParticipants)")
             Button(action: {
                 session.updateSessionTime(time: timeLimit)
                 session.updateSessionRadius(radius: radius)
