@@ -27,14 +27,25 @@ struct ContentView: View {
 
 struct HomeView: View {
     @State private var selection = 0
+    @EnvironmentObject var session: SessionStore
     
     var body: some View {
         NavigationView{
             TabView {
                 VStack{
+                    Spacer()
+                    Text("Dinder")
+                        .font(.largeTitle)
+                        .fontWeight(.black)
+                        .foregroundColor(Color(hex: "2F4858"))
+                    Spacer()
                     NavigationLink(destination: CreateSession()){
                         Text("Create Session")
                     }
+                    NavigationLink(destination: JoinSession()) {
+                        Text("Join Session")
+                    }
+                    Spacer()
                 }.tabItem{VStack{
                     Image(systemName: "mappin.and.ellipse")
                     Text("Sessions")

@@ -38,7 +38,7 @@ struct Account: View {
                 }, secondaryButton: .cancel() )
             }
             Button(action: {
-                session.signOut()
+                let result = session.signOut()
             }) {
                 HStack {
                     Image(systemName: "square.and.arrow.up")
@@ -64,7 +64,7 @@ struct Account: View {
                 Text("Create session: \(session.sessionCode ?? 0)")
             }
             Button(action: {
-                session.joinSession()
+//                session.joinSession()
             }) {
                 Text("Join session:")
             }

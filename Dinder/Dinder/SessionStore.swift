@@ -23,19 +23,22 @@ class SessionStore : ObservableObject {
     @Published var result = ""
     @Published var sessionError: String? = nil
     @Published var sessionDeleted = false
+    @Published var createdSession = false
+    @Published var joinedSession = false
     
     func joinSession(joinCode: Int) {
         db.collection("Sessions").document("\(joinCode)").updateData([
-            "participants": FieldValue.increment(Int64()),
+            "participants": FieldValue.increment(Int64(1)),
             "likes.\(self.session!.uid)": []
         ]) { err in
-            if let err = err {
+            if err != nil {
                 self.sessionError = "Error: could not join the session"
             } else {
                 self.sessionCode = joinCode
+                self.joinedSession = true
+                self.watchSession()
             }
         }
-        watchSession()
     }
     
     func leaveSession() {
@@ -44,13 +47,14 @@ class SessionStore : ObservableObject {
                 "participants": FieldValue.increment(Int64(-1)),
                 "likes.\(self.session!.uid)": FieldValue.delete()
             ]) { err in
-                if let err = err {
+                if err != nil {
                     self.sessionError = "Error: could not leave the session"
                 } else {
                     self.sessionCode = nil
                     self.numParticipants = 0
                     self.sessionLive = false
                     self.result = ""
+                    self.joinedSession = false
                 }
             }
         }
@@ -67,6 +71,7 @@ class SessionStore : ObservableObject {
                     self.numParticipants = 0
                     self.sessionLive = false
                     self.result = ""
+                    self.createdSession = false
                 }
             }
         }
@@ -105,7 +110,7 @@ class SessionStore : ObservableObject {
                 return
               }
                 
-              print("Current data: \(data["live"])")
+                print("Current data: \(data["live"] ?? "did not exist")")
                 if let live = data["live"], live as! Bool != self.sessionLive {
                     self.sessionLive = live as! Bool
                 }
@@ -144,6 +149,7 @@ class SessionStore : ObservableObject {
             "result": ""
         ])
         watchSession()
+        self.createdSession = true
     }
     
     func getEmail() -> String {
@@ -156,7 +162,7 @@ class SessionStore : ObservableObject {
             if let user = user {
                 // if we have a user, create a new user model
                 print("Got user: \(user)")
-                print("Got user email: \(user.email)")
+                print("Got user email: \(String(describing: user.email))")
                 self.session = User(
                     uid: user.uid,
                     email: user.email
@@ -189,7 +195,10 @@ class SessionStore : ObservableObject {
         handler: @escaping (Error?) -> Void
         ) {
         Auth.auth().sendPasswordReset(withEmail: email, completion: handler)
-        signOut()
+        if (!signOut()) {
+            sessionError = "could not sign out"
+        }
+        
     }
 
     func signOut () -> Bool {
@@ -205,7 +214,7 @@ class SessionStore : ObservableObject {
     func delete () {
         let user = Auth.auth().currentUser
         user?.delete { error in
-            if let error = error {
+            if error != nil {
                 
             } else {
                 self.session = nil
