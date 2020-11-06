@@ -63,6 +63,11 @@ struct CreateSession: View {
             }.disabled(session.sessionCode == nil)
             Spacer()
         }.buttonStyle(DinderButtonStyle())
+        .onDisappear(perform: {
+            if !session.sessionLive {
+                session.deleteSession()
+            }
+        })
     }
 }
 
