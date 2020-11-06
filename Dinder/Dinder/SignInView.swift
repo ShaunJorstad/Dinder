@@ -91,9 +91,7 @@ struct SignInView : View {
                 VStack {
                     Spacer()
                     Text("Dinder")
-                        .font(.largeTitle)
-                        .fontWeight(.black)
-                        .foregroundColor(Color(hex: "2F4858"))
+                        .dinderTitleStyle()
                     Rectangle()
                         .frame(width: 280.0, height: 280.0)
                         .cornerRadius(/*@START_MENU_TOKEN@*/38.0/*@END_MENU_TOKEN@*/)
@@ -118,21 +116,11 @@ struct SignInView : View {
                 VStack {
                     Spacer()
                     Text("Log in")
-                        .font(.largeTitle)
-                        .fontWeight(.black)
-                        .foregroundColor(Color(hex: "2F4858"))
+                        .dinderTitleStyle()
                     Spacer()
                     Group {
                         TextField("email", text: $email)
-                            .padding()
-                            .frame(width: 304, height: 60)
-                            .background(Color(hex: "F2F7FC"))
-                            .cornerRadius(8.0)
                         SecureField("password", text: $password)
-                            .padding()
-                            .frame(width: 304, height: 60)
-                            .background(Color(hex: "F2F7FC"))
-                            .cornerRadius(8.0)
                         Button(action: {
                             if (self.email == "") {
                                 self.alertId = AlertId(id: .invalidEmail)
@@ -145,7 +133,7 @@ struct SignInView : View {
                         }.alert(item: $alertId) { (alertId) -> Alert in
                             createAlert(alertId: alertId)
                         }
-                    }
+                    }.textFieldStyle(DinderTextFieldStyle())
                     Spacer()
                         .frame(height: 118.0)
                     Group {
@@ -155,12 +143,8 @@ struct SignInView : View {
                             }
                         }) {
                             Text("Log In")
-                                .padding()
-                                .frame(width: 300)
-                                .background(Color(hex: "2F4858"))
-                                .cornerRadius(12.0)
-                                .foregroundColor(.white)
-                        }.alert(isPresented: $error) {
+                        }.buttonStyle(DinderButtonStyle())
+                        .alert(isPresented: $error) {
                             Alert(title: Text("\(errorTitle)"), message: Text("\(errorMessage)"), dismissButton: .default(Text("dismiss")) )
                         }
                         Button(action: {
@@ -177,27 +161,13 @@ struct SignInView : View {
                 VStack {
                     Spacer()
                     Text("Join")
-                        .font(.largeTitle)
-                        .fontWeight(.black)
-                        .foregroundColor(Color(hex: "2F4858"))
+                        .dinderTitleStyle()
                     Spacer()
                     Group {
                         TextField("email", text: $email)
-                            .padding()
-                            .frame(width: 304, height: 60)
-                            .background(Color(hex: "F2F7FC"))
-                            .cornerRadius(8.0)
                         SecureField("password", text: $password)
-                            .padding()
-                            .frame(width: 304, height: 60)
-                            .background(Color(hex: "F2F7FC"))
-                            .cornerRadius(8.0)
                         SecureField("confirm password", text: $confirmPassword)
-                            .padding()
-                            .frame(width: 304, height: 60)
-                            .background(Color(hex: "F2F7FC"))
-                            .cornerRadius(8.0)
-                    }
+                    }.textFieldStyle(DinderTextFieldStyle())
                     Spacer()
                         .frame(height: 118.0)
                     Group {
@@ -212,12 +182,7 @@ struct SignInView : View {
                             }
                         }) {
                             Text("Join")
-                                .padding()
-                                .frame(width: 300)
-                                .background(Color(hex: "2F4858"))
-                                .cornerRadius(12.0)
-                                .foregroundColor(.white)
-                        }
+                        }.buttonStyle(DinderButtonStyle())
                         Button(action: {
                             withAnimation {
                                 self.state = "signin"

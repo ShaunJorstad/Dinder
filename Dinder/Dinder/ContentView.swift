@@ -35,18 +35,18 @@ struct HomeView: View {
                 VStack{
                     Spacer()
                     Text("Dinder")
-                        .font(.largeTitle)
-                        .fontWeight(.black)
-                        .foregroundColor(Color(hex: "2F4858"))
+                        .dinderTitleStyle()
                     Spacer()
                     NavigationLink(destination: CreateSession()){
-                        Text("Create Session")
+                        Text("Start Session")
                     }
                     NavigationLink(destination: JoinSession()) {
                         Text("Join Session")
                     }
                     Spacer()
-                }.tabItem{VStack{
+                }
+                .buttonStyle(DinderButtonStyle())
+                .tabItem{VStack{
                     Image(systemName: "mappin.and.ellipse")
                     Text("Sessions")
                 }}.tag(0)

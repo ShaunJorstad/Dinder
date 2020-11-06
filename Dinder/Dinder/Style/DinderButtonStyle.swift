@@ -19,11 +19,10 @@ struct DinderButtonStyle: ButtonStyle {
         
         var body: some View {
             configuration.label
-                .frame(width: 300)
+                .frame(maxWidth: 300)
                 .foregroundColor(.white)
                 .font(Font.body.bold())
                 .padding()
-                .padding(.horizontal, 20)
                 .background(isEnabled ? Color(hex: "2F4858").opacity(
                     configuration.isPressed ? 0.5 : 1
                 ) : Color.gray)

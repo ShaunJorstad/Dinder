@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		77CC1C3CDFF8CD297CBBD7F6 /* Pods_Dinder_DinderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FE4823B88B4D45D756F167C /* Pods_Dinder_DinderUITests.framework */; };
 		9F19725F76F826113EE6993C /* Pods_DinderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F43E3C2F756ED973B3DDE2 /* Pods_DinderTests.framework */; };
+		A32075252555DF4F000C9EED /* DinderTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32075242555DF4F000C9EED /* DinderTextStyle.swift */; };
+		A320752D2555E321000C9EED /* DinderTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A320752C2555E321000C9EED /* DinderTextFieldStyle.swift */; };
 		C071818B2554CB7C007A39FF /* CreateSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C071818A2554CB7C007A39FF /* CreateSession.swift */; };
 		C07181902554CDD9007A39FF /* DinderButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C071818F2554CDD9007A39FF /* DinderButtonStyle.swift */; };
 		C08AC69D2555B2F500A47AA9 /* JoinSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08AC69C2555B2F500A47AA9 /* JoinSession.swift */; };
@@ -51,8 +53,10 @@
 		3FE4823B88B4D45D756F167C /* Pods_Dinder_DinderUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dinder_DinderUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F43E3C2F756ED973B3DDE2 /* Pods_DinderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DinderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91449BD2567B2DE2AA08F861 /* Pods-Dinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dinder.debug.xcconfig"; path = "Target Support Files/Pods-Dinder/Pods-Dinder.debug.xcconfig"; sourceTree = "<group>"; };
+		A32075242555DF4F000C9EED /* DinderTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DinderTextStyle.swift; sourceTree = "<group>"; };
+		A320752C2555E321000C9EED /* DinderTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DinderTextFieldStyle.swift; sourceTree = "<group>"; };
 		C071818A2554CB7C007A39FF /* CreateSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSession.swift; sourceTree = "<group>"; };
-		C071818F2554CDD9007A39FF /* DinderButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DinderButtonStyle.swift; path = Style/DinderButtonStyle.swift; sourceTree = "<group>"; };
+		C071818F2554CDD9007A39FF /* DinderButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinderButtonStyle.swift; sourceTree = "<group>"; };
 		C08AC69C2555B2F500A47AA9 /* JoinSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinSession.swift; sourceTree = "<group>"; };
 		C091F13F254FBA0900C3D983 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C091F144254FBAF900C3D983 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
@@ -120,6 +124,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		A32075232555DF39000C9EED /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				C071818F2554CDD9007A39FF /* DinderButtonStyle.swift */,
+				A32075242555DF4F000C9EED /* DinderTextStyle.swift */,
+				A320752C2555E321000C9EED /* DinderTextFieldStyle.swift */,
+			);
+			path = Style;
+			sourceTree = "<group>";
+		};
 		A872886F43833612ADB76218 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,13 +169,13 @@
 		C0EABA12254FB93D00A701C0 /* Dinder */ = {
 			isa = PBXGroup;
 			children = (
+				A32075232555DF39000C9EED /* Style */,
 				C0EABA13254FB93D00A701C0 /* AppDelegate.swift */,
 				C0EABA15254FB93D00A701C0 /* SceneDelegate.swift */,
 				C0EABA17254FB93D00A701C0 /* ContentView.swift */,
 				C0E2CD322555D5C000EDD986 /* LiveSession.swift */,
 				C08AC69C2555B2F500A47AA9 /* JoinSession.swift */,
 				C071818A2554CB7C007A39FF /* CreateSession.swift */,
-				C071818F2554CDD9007A39FF /* DinderButtonStyle.swift */,
 				C091F14E254FC46A00C3D983 /* Account.swift */,
 				C091F149254FBC9900C3D983 /* SignInView.swift */,
 				C091F144254FBAF900C3D983 /* SessionStore.swift */,
@@ -440,12 +454,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C071818B2554CB7C007A39FF /* CreateSession.swift in Sources */,
+				A320752D2555E321000C9EED /* DinderTextFieldStyle.swift in Sources */,
 				C0EABA14254FB93D00A701C0 /* AppDelegate.swift in Sources */,
 				C08AC69D2555B2F500A47AA9 /* JoinSession.swift in Sources */,
 				C0EABA16254FB93D00A701C0 /* SceneDelegate.swift in Sources */,
 				C0E2CD332555D5C000EDD986 /* LiveSession.swift in Sources */,
 				C091F145254FBAF900C3D983 /* SessionStore.swift in Sources */,
 				C0EABA18254FB93D00A701C0 /* ContentView.swift in Sources */,
+				A32075252555DF4F000C9EED /* DinderTextStyle.swift in Sources */,
 				C07181902554CDD9007A39FF /* DinderButtonStyle.swift in Sources */,
 				C091F14A254FBC9900C3D983 /* SignInView.swift in Sources */,
 				C091F14F254FC46A00C3D983 /* Account.swift in Sources */,
