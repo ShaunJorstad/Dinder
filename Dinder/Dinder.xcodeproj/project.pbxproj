@@ -226,6 +226,7 @@
 				C0EABA0D254FB93D00A701C0 /* Frameworks */,
 				C0EABA0E254FB93D00A701C0 /* Resources */,
 				5CEF8F90BB649FA47886296C /* [CP] Embed Pods Frameworks */,
+				551C4BBB790B2A50FAE42AEA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -264,6 +265,7 @@
 				C0EABA2E254FB94000A701C0 /* Frameworks */,
 				C0EABA2F254FB94000A701C0 /* Resources */,
 				4A82C895304F6D62DB2876D8 /* [CP] Embed Pods Frameworks */,
+				CD16226060ECB9D8BF3059C6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -407,6 +409,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dinder-DinderUITests/Pods-Dinder-DinderUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		551C4BBB790B2A50FAE42AEA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dinder/Pods-Dinder-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dinder/Pods-Dinder-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dinder/Pods-Dinder-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5CEF8F90BB649FA47886296C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -444,6 +463,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CD16226060ECB9D8BF3059C6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dinder-DinderUITests/Pods-Dinder-DinderUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dinder-DinderUITests/Pods-Dinder-DinderUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dinder-DinderUITests/Pods-Dinder-DinderUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

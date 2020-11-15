@@ -9,6 +9,7 @@ target 'Dinder' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'GooglePlaces', '4.0.0'
 
   target 'DinderTests' do
     inherit! :search_paths
