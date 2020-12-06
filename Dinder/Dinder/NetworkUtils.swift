@@ -19,7 +19,7 @@ enum FileError: Error {
 func downloadJsonAsync<T: Decodable>(
     from: String,
     decoder: JSONDecoder = JSONDecoder()
-) -> AnyPublisher<T, Error> {
+) -> AnyPublisher<T?, Never> {
     URLSession.shared
         .dataTaskPublisher(for: URL(string: from)!)
         .tryMap { data, response -> Data in
@@ -30,6 +30,8 @@ func downloadJsonAsync<T: Decodable>(
             return data
         }
         .decode(type: T.self, decoder: decoder)
+        .map{Optional($0)}
+        .replaceError(with: nil)
         .receive(on: DispatchQueue.main)
         .eraseToAnyPublisher()
 }
