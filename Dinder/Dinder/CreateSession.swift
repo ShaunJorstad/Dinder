@@ -57,7 +57,7 @@ struct CreateSession: View {
         Group {
             if (!session.sessionLive) {
                 form
-            } else if (session.sessionLive && !(session.restaurantList?.results.isEmpty ?? true)) {
+            } else if (session.sessionLive && session.restaurantList == nil) {
                 VStack {
                     Text("Fetching Restaraunt List")
                         .dinderTitleStyle()

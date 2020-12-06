@@ -20,6 +20,21 @@ func downloadJsonAsync<T: Decodable>(
     from: String,
     decoder: JSONDecoder = JSONDecoder()
 ) -> AnyPublisher<T?, Never> {
+    decodeJsonAsync(dataPublisher: getRemoteDataAsync(from: from), decoder: decoder)
+}
+
+func decodeJsonAsync<T: Decodable>(
+    dataPublisher: AnyPublisher<Data, Error>,
+    decoder: JSONDecoder = JSONDecoder()
+) -> AnyPublisher<T?, Never> {
+    dataPublisher.decode(type: T.self, decoder: decoder)
+        .map{Optional($0)}
+        .replaceError(with: nil)
+        .receive(on: DispatchQueue.main)
+        .eraseToAnyPublisher()
+}
+
+func getRemoteDataAsync(from: String) -> AnyPublisher<Data, Error> {
     URLSession.shared
         .dataTaskPublisher(for: URL(string: from)!)
         .tryMap { data, response -> Data in
@@ -29,10 +44,6 @@ func downloadJsonAsync<T: Decodable>(
             }
             return data
         }
-        .decode(type: T.self, decoder: decoder)
-        .map{Optional($0)}
-        .replaceError(with: nil)
-        .receive(on: DispatchQueue.main)
         .eraseToAnyPublisher()
 }
 
@@ -41,7 +52,7 @@ func loadJsonFromBundle<T: Decodable>(
     fileExtension: String,
     decoder: JSONDecoder = JSONDecoder()
 ) -> AnyPublisher<T?, Never> {
-    Future<URL, Error>{ promise in
+    let fileDataPublisher = Future<URL, Error>{ promise in
         if let fileUrl = Bundle.main.url(forResource: filename, withExtension: fileExtension) {
             return promise(.success(fileUrl))
         }
@@ -49,9 +60,7 @@ func loadJsonFromBundle<T: Decodable>(
         return promise(.failure(FileError.fileNotFound))
     }
     .tryMap{ try Data(contentsOf: $0) }
-    .decode(type: T.self, decoder: decoder)
-    .map{Optional($0)}
-    .replaceError(with: nil)
-    .receive(on: DispatchQueue.main)
     .eraseToAnyPublisher()
+    
+    return decodeJsonAsync(dataPublisher: fileDataPublisher, decoder: decoder)
 }

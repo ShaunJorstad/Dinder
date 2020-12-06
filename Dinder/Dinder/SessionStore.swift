@@ -132,7 +132,9 @@ class SessionStore : ObservableObject {
                     }
                 }
                 if let value = data["restaurantList"] as? [String: Any] {
-                    self.restaurantList = try? FirestoreDecoder().decode(RestaurantList.self, from: value)
+                    if !value.isEmpty {
+                        self.restaurantList = try? FirestoreDecoder().decode(RestaurantList.self, from: value)
+                    }
                 }
             }
     }

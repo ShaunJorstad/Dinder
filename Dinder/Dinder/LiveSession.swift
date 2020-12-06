@@ -19,8 +19,22 @@ struct LiveSession: View {
 
     var body: some View {
         Group {
-            Text("Session just started!")
-                .dinderTitleStyle()
+            VStack {
+                Text("Session just started!")
+                    .dinderTitleStyle()
+                if let restaurantList = session.restaurantList?.results {
+                    List {
+                        ForEach(restaurantList, id: \.name) { restaurant in
+                            if let photo = restaurant.photos?[0] {
+                                VStack {
+                                    Text(restaurant.name)
+                                    PlaceReferenceImage(fromReference: photo.photoReference, width: photo.width, height: photo.height)
+                                }
+                            }
+                        }
+                }
+                }
+            }
         }
         .onDisappear {
             if (session.sessionCode != nil && self.creator) {
