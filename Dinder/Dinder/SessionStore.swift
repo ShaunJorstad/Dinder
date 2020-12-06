@@ -24,7 +24,7 @@ class SessionStore : ObservableObject {
     @Published var result = ""
     @Published var sessionError: String? = nil
     @Published var sessionDeleted = false
-    @Published var restarauntList: RestaurantList? = nil
+    @Published var restaurantList: RestaurantList? = nil
     
     func joinSession(joinCode: Int) {
         db.collection("Sessions").document("\(joinCode)").updateData([
@@ -132,7 +132,7 @@ class SessionStore : ObservableObject {
                     }
                 }
                 if let value = data["restaurantList"] as? [String: Any] {
-                    self.restarauntList = try? FirestoreDecoder().decode(RestaurantList.self, from: value)
+                    self.restaurantList = try? FirestoreDecoder().decode(RestaurantList.self, from: value)
                 }
             }
     }
