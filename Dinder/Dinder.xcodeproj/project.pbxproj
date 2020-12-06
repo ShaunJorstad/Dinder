@@ -153,7 +153,6 @@
 		C0EABA07254FB93D00A701C0 = {
 			isa = PBXGroup;
 			children = (
-				A36BF576257C139700F98B44 /* NetworkUtils.swift */,
 				C0EABA12254FB93D00A701C0 /* Dinder */,
 				C0EABA29254FB94000A701C0 /* DinderTests */,
 				C0EABA34254FB94000A701C0 /* DinderUITests */,
@@ -176,6 +175,7 @@
 		C0EABA12254FB93D00A701C0 /* Dinder */ = {
 			isa = PBXGroup;
 			children = (
+				A36BF576257C139700F98B44 /* NetworkUtils.swift */,
 				A36BF57B257C171800F98B44 /* response.json */,
 				A32075232555DF39000C9EED /* Style */,
 				C0EABA13254FB93D00A701C0 /* AppDelegate.swift */,
