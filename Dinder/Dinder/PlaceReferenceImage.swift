@@ -34,6 +34,7 @@ class RemoteImage: ObservableObject {
     init(from: String) {
         self.pipeline = getRemoteDataAsync(from: from)
             .map { UIImage(data: $0) }
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: {
                 print("Could not download image: \($0)")
             }, receiveValue: {

@@ -21,6 +21,8 @@ func downloadJsonAsync<T: Decodable>(
     decoder: JSONDecoder = JSONDecoder()
 ) -> AnyPublisher<T?, Never> {
     decodeJsonAsync(dataPublisher: getRemoteDataAsync(from: from), decoder: decoder)
+        .receive(on: DispatchQueue.main)
+        .eraseToAnyPublisher()
 }
 
 func decodeJsonAsync<T: Decodable>(
@@ -30,7 +32,6 @@ func decodeJsonAsync<T: Decodable>(
     dataPublisher.decode(type: T.self, decoder: decoder)
         .map{Optional($0)}
         .replaceError(with: nil)
-        .receive(on: DispatchQueue.main)
         .eraseToAnyPublisher()
 }
 
@@ -63,4 +64,6 @@ func loadJsonFromBundle<T: Decodable>(
     .eraseToAnyPublisher()
     
     return decodeJsonAsync(dataPublisher: fileDataPublisher, decoder: decoder)
+        .receive(on: DispatchQueue.main)
+        .eraseToAnyPublisher()
 }
