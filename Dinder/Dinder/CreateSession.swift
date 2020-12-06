@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import CoreLocation
+import Combine
 
 struct CreateSession: View {
     @EnvironmentObject var session: SessionStore
     
     @State var timeLimit: Int = 1
     @State var radius: Int = 1
+    
+    @State var fetchPipeline: AnyCancellable? = nil
+    
+    var locationManger = LocationDelegate()
     
     var form: some View {
         VStack {
@@ -30,7 +36,7 @@ struct CreateSession: View {
             HStack {
                 Text("Travel Radius:")
                     .dinderRegularStyle()
-                Stepper(value: $radius, in: 1...100) {
+                Stepper(value: $radius, in: 1...30) {
                     Text("\(radius) mile")
                         .dinderRegularStyle()
                 }
@@ -55,19 +61,18 @@ struct CreateSession: View {
     
     var body: some View {
         Group {
-            if (!session.sessionLive) {
+            if !session.sessionLive {
                 form
-            } else if (session.sessionLive && session.restaurantList == nil) {
+            } else if session.sessionLive && session.restaurantList == nil {
                 VStack {
                     Text("Fetching Restaraunt List")
                         .dinderTitleStyle()
                     ProgressView()
                 }
-            } else if (session.sessionLive) {
+            } else if session.sessionLive {
                 LiveSession(created: true)
             }
         }
-        //Replace with actual api call
         .onReceive(loadJsonFromBundle(filename: "response", fileExtension: "json"), perform: updateRestaurantList)
         .onDisappear {
             if !session.sessionLive {
@@ -80,9 +85,6 @@ struct CreateSession: View {
         guard let list = list else {
             return
         }
-        
-        print("Hello")
-        
         session.updateRestaurantList(list: list)
     }
     
@@ -90,6 +92,53 @@ struct CreateSession: View {
         session.updateSessionTime(time: timeLimit)
         session.updateSessionRadius(radius: radius)
         session.startSession()
+        
+        //Uncomment to use acutal location
+        //fetchRestaurants()
+    }
+    
+    func fetchRestaurants() {
+        let (latitude, longitude) = locationManger.getLastLocation()
+        let meters = Int(Double(radius) * 1609.344)
+        
+        let url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\(latitude),\(longitude)&radius=\(meters)&type=restaurant&key=AIzaSyDNvJmFkPt54ZFAqa3O0U4ZdDGaFsyB3fk"
+        
+        fetchPipeline = downloadJsonAsync(from: url)
+            .sink(receiveCompletion: {
+                print("error getting resaurants \($0)")
+            }, receiveValue: updateRestaurantList)
+    }
+}
+
+class LocationDelegate: NSObject, CLLocationManagerDelegate {
+    var locationManager = CLLocationManager()
+    var lastLocation: CLLocation?
+    
+    override init() {
+        super.init()
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+    }
+    
+    func getLastLocation() -> (String, String){
+        guard let location = lastLocation else {
+            return ("", "")
+        }
+        
+        return (location.coordinate.latitude.description, location.coordinate.longitude.description)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            lastLocation = location
+            print("Found user's location: \(location)")
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to find user's location: \(error.localizedDescription)")
     }
 }
 
