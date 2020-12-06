@@ -11,6 +11,9 @@
 		9F19725F76F826113EE6993C /* Pods_DinderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F43E3C2F756ED973B3DDE2 /* Pods_DinderTests.framework */; };
 		A32075252555DF4F000C9EED /* DinderTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32075242555DF4F000C9EED /* DinderTextStyle.swift */; };
 		A320752D2555E321000C9EED /* DinderTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A320752C2555E321000C9EED /* DinderTextFieldStyle.swift */; };
+		A36BF577257C139700F98B44 /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36BF576257C139700F98B44 /* NetworkUtils.swift */; };
+		A36BF57C257C171800F98B44 /* response.json in Resources */ = {isa = PBXBuildFile; fileRef = A36BF57B257C171800F98B44 /* response.json */; };
+		A36BF588257C362100F98B44 /* Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36BF587257C362100F98B44 /* Json.swift */; };
 		C071818B2554CB7C007A39FF /* CreateSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C071818A2554CB7C007A39FF /* CreateSession.swift */; };
 		C07181902554CDD9007A39FF /* DinderButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C071818F2554CDD9007A39FF /* DinderButtonStyle.swift */; };
 		C08AC69D2555B2F500A47AA9 /* JoinSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08AC69C2555B2F500A47AA9 /* JoinSession.swift */; };
@@ -55,6 +58,9 @@
 		91449BD2567B2DE2AA08F861 /* Pods-Dinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dinder.debug.xcconfig"; path = "Target Support Files/Pods-Dinder/Pods-Dinder.debug.xcconfig"; sourceTree = "<group>"; };
 		A32075242555DF4F000C9EED /* DinderTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DinderTextStyle.swift; sourceTree = "<group>"; };
 		A320752C2555E321000C9EED /* DinderTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DinderTextFieldStyle.swift; sourceTree = "<group>"; };
+		A36BF576257C139700F98B44 /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
+		A36BF57B257C171800F98B44 /* response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = response.json; sourceTree = "<group>"; };
+		A36BF587257C362100F98B44 /* Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
 		C071818A2554CB7C007A39FF /* CreateSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSession.swift; sourceTree = "<group>"; };
 		C071818F2554CDD9007A39FF /* DinderButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinderButtonStyle.swift; sourceTree = "<group>"; };
 		C08AC69C2555B2F500A47AA9 /* JoinSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinSession.swift; sourceTree = "<group>"; };
@@ -147,6 +153,7 @@
 		C0EABA07254FB93D00A701C0 = {
 			isa = PBXGroup;
 			children = (
+				A36BF576257C139700F98B44 /* NetworkUtils.swift */,
 				C0EABA12254FB93D00A701C0 /* Dinder */,
 				C0EABA29254FB94000A701C0 /* DinderTests */,
 				C0EABA34254FB94000A701C0 /* DinderUITests */,
@@ -169,6 +176,7 @@
 		C0EABA12254FB93D00A701C0 /* Dinder */ = {
 			isa = PBXGroup;
 			children = (
+				A36BF57B257C171800F98B44 /* response.json */,
 				A32075232555DF39000C9EED /* Style */,
 				C0EABA13254FB93D00A701C0 /* AppDelegate.swift */,
 				C0EABA15254FB93D00A701C0 /* SceneDelegate.swift */,
@@ -184,6 +192,7 @@
 				C0EABA1E254FB93F00A701C0 /* LaunchScreen.storyboard */,
 				C0EABA21254FB93F00A701C0 /* Info.plist */,
 				C0EABA1B254FB93F00A701C0 /* Preview Content */,
+				A36BF587257C362100F98B44 /* Json.swift */,
 			);
 			path = Dinder;
 			sourceTree = "<group>";
@@ -226,7 +235,6 @@
 				C0EABA0D254FB93D00A701C0 /* Frameworks */,
 				C0EABA0E254FB93D00A701C0 /* Resources */,
 				5CEF8F90BB649FA47886296C /* [CP] Embed Pods Frameworks */,
-				551C4BBB790B2A50FAE42AEA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -265,7 +273,6 @@
 				C0EABA2E254FB94000A701C0 /* Frameworks */,
 				C0EABA2F254FB94000A701C0 /* Resources */,
 				4A82C895304F6D62DB2876D8 /* [CP] Embed Pods Frameworks */,
-				CD16226060ECB9D8BF3059C6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -325,6 +332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0EABA20254FB93F00A701C0 /* LaunchScreen.storyboard in Resources */,
+				A36BF57C257C171800F98B44 /* response.json in Resources */,
 				C091F140254FBA0900C3D983 /* GoogleService-Info.plist in Resources */,
 				C0EABA1D254FB93F00A701C0 /* Preview Assets.xcassets in Resources */,
 				C0EABA1A254FB93F00A701C0 /* Assets.xcassets in Resources */,
@@ -409,23 +417,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dinder-DinderUITests/Pods-Dinder-DinderUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		551C4BBB790B2A50FAE42AEA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dinder/Pods-Dinder-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dinder/Pods-Dinder-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dinder/Pods-Dinder-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		5CEF8F90BB649FA47886296C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -465,23 +456,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CD16226060ECB9D8BF3059C6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dinder-DinderUITests/Pods-Dinder-DinderUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Dinder-DinderUITests/Pods-Dinder-DinderUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dinder-DinderUITests/Pods-Dinder-DinderUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -496,8 +470,10 @@
 				C0EABA16254FB93D00A701C0 /* SceneDelegate.swift in Sources */,
 				C0E2CD332555D5C000EDD986 /* LiveSession.swift in Sources */,
 				C091F145254FBAF900C3D983 /* SessionStore.swift in Sources */,
+				A36BF588257C362100F98B44 /* Json.swift in Sources */,
 				C0EABA18254FB93D00A701C0 /* ContentView.swift in Sources */,
 				A32075252555DF4F000C9EED /* DinderTextStyle.swift in Sources */,
+				A36BF577257C139700F98B44 /* NetworkUtils.swift in Sources */,
 				C07181902554CDD9007A39FF /* DinderButtonStyle.swift in Sources */,
 				C091F14A254FBC9900C3D983 /* SignInView.swift in Sources */,
 				C091F14F254FC46A00C3D983 /* Account.swift in Sources */,
@@ -671,7 +647,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Dinder/Preview Content\"";
-				DEVELOPMENT_TEAM = P662UHYL4T;
+				DEVELOPMENT_TEAM = 74YMV2J9D7;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -693,7 +669,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Dinder/Preview Content\"";
-				DEVELOPMENT_TEAM = P662UHYL4T;
+				DEVELOPMENT_TEAM = 74YMV2J9D7;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Dinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

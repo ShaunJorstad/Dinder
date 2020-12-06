@@ -10,6 +10,7 @@ import SwiftUI
 
 struct LiveSession: View {
     @EnvironmentObject var session: SessionStore
+    
     var creator = false
     
     init(created: Bool) {

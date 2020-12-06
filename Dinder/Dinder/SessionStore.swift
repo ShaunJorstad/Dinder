@@ -11,6 +11,7 @@ import Firebase
 import FirebaseCore
 import FirebaseFirestore
 import Combine
+import CodableFirebase
 
 class SessionStore : ObservableObject {
     let db = Firestore.firestore()
@@ -23,6 +24,7 @@ class SessionStore : ObservableObject {
     @Published var result = ""
     @Published var sessionError: String? = nil
     @Published var sessionDeleted = false
+    @Published var restarauntList: RestarauntList? = nil
     
     func joinSession(joinCode: Int) {
         db.collection("Sessions").document("\(joinCode)").updateData([
@@ -129,6 +131,9 @@ class SessionStore : ObservableObject {
                         self.result = result as! String
                     }
                 }
+                if let value = data["restarauntList"] as? [String: Any] {
+                    self.restarauntList = try? FirestoreDecoder().decode(RestarauntList.self, from: value)
+                }
             }
     }
     
@@ -144,6 +149,14 @@ class SessionStore : ObservableObject {
         ])
     }
     
+    func updateRestarauntList(list: RestarauntList) {
+        if let data = try? FirestoreEncoder().encode(list) {
+            db.collection("Sessions").document("\(sessionCode!)").updateData([
+                "restarauntList": data
+            ])
+        }
+    }
+    
     func createSession() {
         self.sessionCode = Int.random(in: 1000...9999)
         var likesDict: [String: [String]] = [:]
@@ -155,7 +168,8 @@ class SessionStore : ObservableObject {
             "participants": 0,
             "live": false,
             "likes": likesDict,
-            "result": ""
+            "result": "",
+            "restarauntList": []
         ])
         watchSession()
     }

@@ -13,58 +13,83 @@ struct CreateSession: View {
     @State var timeLimit: Int = 1
     @State var radius: Int = 1
     
+    var form: some View {
+        VStack {
+            Spacer()
+            Text("Share this code:")
+                .dinderTitleStyle()
+            if let code = session.sessionCode {
+                Text(verbatim: "\(code)")
+                    .dinderTitleStyle()
+            } else {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .onAppear(perform: session.createSession)
+            }
+            Spacer()
+            HStack {
+                Text("Travel Radius:")
+                    .dinderRegularStyle()
+                Stepper(value: $radius, in: 1...100) {
+                    Text("\(radius) mile")
+                        .dinderRegularStyle()
+                }
+            }.padding()
+            HStack {
+                Text("Time Limit:")
+                    .dinderRegularStyle()
+                Stepper(value: $timeLimit, in: 1...10) {
+                    Text("\(timeLimit) minutes")
+                        .dinderRegularStyle()
+                }
+            }.padding()
+            Spacer()
+            Text("Party of \(session.numParticipants)")
+                .dinderRegularStyle()
+            Button(action: start) {
+                Text("Start")
+            }.disabled(session.sessionCode == nil)
+            Spacer()
+        }.buttonStyle(DinderButtonStyle())
+    }
+    
     var body: some View {
         Group {
             if (!session.sessionLive) {
+                form
+            } else if (session.sessionLive && session.restarauntList == nil) {
                 VStack {
-                    Spacer()
-                    Text("Share this code:")
+                    Text("Fetching Restaraunt List")
                         .dinderTitleStyle()
-                    if let code = session.sessionCode {
-                        Text(verbatim: "\(code)")
-                            .dinderTitleStyle()
-                    } else {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                            .onAppear(perform: session.createSession)
-                    }
-                    Spacer()
-                    HStack {
-                        Text("Travel Radius:")
-                            .dinderRegularStyle()
-                        Stepper(value: $radius, in: 1...100) {
-                            Text("\(radius) mile")
-                                .dinderRegularStyle()
-                        }
-                    }.padding()
-                    HStack {
-                        Text("Time Limit:")
-                            .dinderRegularStyle()
-                        Stepper(value: $timeLimit, in: 1...10) {
-                            Text("\(timeLimit) minutes")
-                                .dinderRegularStyle()
-                        }
-                    }.padding()
-                    Spacer()
-                    Text("Party of \(session.numParticipants)")
-                        .dinderRegularStyle()
-                    Button(action: {
-                        session.updateSessionTime(time: timeLimit)
-                        session.updateSessionRadius(radius: radius)
-                        session.startSession()
-                    }) {
-                        Text("Start")
-                    }.disabled(session.sessionCode == nil)
-                    Spacer()
-                }.buttonStyle(DinderButtonStyle())
-            } else if (session.sessionLive){
+                    ProgressView()
+                }
+            } else if (session.sessionLive) {
                 LiveSession(created: true)
             }
-        }.onDisappear(perform: {
+        }
+        //Replace with actual api call
+        .onReceive(loadJsonFromBundle(filename: "response", fileExtension: "json"), perform: updateRestarauntList)
+        .onDisappear {
             if !session.sessionLive {
                 session.deleteSession()
             }
-        })
+        }
+    }
+    
+    func updateRestarauntList(list: RestarauntList?) {
+        guard let list = list else {
+            return
+        }
+        
+        print("Hello")
+        
+        session.updateRestarauntList(list: list)
+    }
+    
+    func start() {
+        session.updateSessionTime(time: timeLimit)
+        session.updateSessionRadius(radius: radius)
+        session.startSession()
     }
 }
 
