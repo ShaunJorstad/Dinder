@@ -68,7 +68,7 @@ struct CreateSession: View {
             }
         }
         //Replace with actual api call
-        .onReceive(loadJsonFromBundle(filename: "response", fileExtension: "json"), perform: updateRestarauntList)
+        .onReceive(loadJsonFromBundle(filename: "response", fileExtension: "json"), perform: updateRestaurantList)
         .onDisappear {
             if !session.sessionLive {
                 session.deleteSession()
@@ -76,14 +76,14 @@ struct CreateSession: View {
         }
     }
     
-    func updateRestarauntList(list: RestarauntList?) {
+    func updateRestaurantList(list: RestaurantList?) {
         guard let list = list else {
             return
         }
         
         print("Hello")
         
-        session.updateRestarauntList(list: list)
+        session.updateRestaurantList(list: list)
     }
     
     func start() {

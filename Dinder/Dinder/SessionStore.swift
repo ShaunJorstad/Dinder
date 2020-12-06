@@ -24,7 +24,7 @@ class SessionStore : ObservableObject {
     @Published var result = ""
     @Published var sessionError: String? = nil
     @Published var sessionDeleted = false
-    @Published var restarauntList: RestarauntList? = nil
+    @Published var restarauntList: RestaurantList? = nil
     
     func joinSession(joinCode: Int) {
         db.collection("Sessions").document("\(joinCode)").updateData([
@@ -131,8 +131,8 @@ class SessionStore : ObservableObject {
                         self.result = result as! String
                     }
                 }
-                if let value = data["restarauntList"] as? [String: Any] {
-                    self.restarauntList = try? FirestoreDecoder().decode(RestarauntList.self, from: value)
+                if let value = data["restaurantList"] as? [String: Any] {
+                    self.restarauntList = try? FirestoreDecoder().decode(RestaurantList.self, from: value)
                 }
             }
     }
@@ -149,10 +149,10 @@ class SessionStore : ObservableObject {
         ])
     }
     
-    func updateRestarauntList(list: RestarauntList) {
+    func updateRestaurantList(list: RestaurantList) {
         if let data = try? FirestoreEncoder().encode(list) {
             db.collection("Sessions").document("\(sessionCode!)").updateData([
-                "restarauntList": data
+                "restaurantList": data
             ])
         }
     }
@@ -169,7 +169,7 @@ class SessionStore : ObservableObject {
             "live": false,
             "likes": likesDict,
             "result": "",
-            "restarauntList": []
+            "restaurantList": []
         ])
         watchSession()
     }

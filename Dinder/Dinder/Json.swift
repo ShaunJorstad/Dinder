@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Restaraunt: Codable {
+struct Restaurant: Codable {
     var name: String
 }
 
-struct RestarauntList: Codable {
-    var results: [Restaraunt]
+struct RestaurantList: Codable {
+    var results: [Restaurant]
 }
