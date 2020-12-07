@@ -14,17 +14,10 @@ struct LiveSession: View {
     var creator = false
     @State var likeRestaurant: Bool = false
     @State var translation: CGSize = .zero
-    @State var index: Int = 0
-    @State var currentRestaurant: Restaurant = Restaurant(name: "", geometry: Geometry.init(location: Location.init(lat: 0.0, lng: 0.0)), vicinity: "")
-    @State var restaurantList: [Restaurant] = []
     @State var likedRestaurants: [Restaurant] = []
-    
+    @State var restaurantList: [Restaurant] = []
     init(created: Bool) {
         self.creator = created
-    }
-    
-    func getNextRestaurant() -> Restaurant {
-        return restaurantList[index]
     }
     
     func getSwipeDirection(_ geometry: GeometryProxy, translation: CGSize) -> CGFloat {
@@ -32,53 +25,64 @@ struct LiveSession: View {
     }
 
     var body: some View {
-        Group {
-            GeometryReader { geometry in
-                VStack {
-                    Text("Session just started!")
-                        .dinderTitleStyle()
-                    
-                    if let photo = currentRestaurant.photos?[0] {
-                        VStack {
-                            Text(currentRestaurant.name)
-                            PlaceReferenceImage(fromReference: photo.photoReference, width: photo.width, height: photo.height)
+        ZStack {
+            if restaurantList.count == 0 {
+                Text("Fuck off")
+            } else {
+                ForEach(restaurantList, id: \.name) { restaurant in
+                    Group {
+                        GeometryReader { geometry in
+                            VStack {
+                                Text("Session just started!").dinderTitleStyle()
+                                
+                                RestaurantView(restaurant: restaurant, width: geometry.size.width, height: geometry.size.height)
+                            }.gesture(DragGesture() .onChanged { value in
+                                if(self.getSwipeDirection(geometry, translation: value.translation) >= 0.5) {
+                                    likeRestaurant = false
+                                    print("Restaurant hated :(")
+                                } else if (self.getSwipeDirection(geometry, translation: value.translation) <= -0.5) {
+                                    likeRestaurant = true
+                                    print("Restaurant liked :)")
+                                }
+                            }.onEnded { value in
+                                if(self.getSwipeDirection(geometry, translation: value.translation) > 0.5) {
+                                    likedRestaurants.append(restaurant)
+                                }
+                                
+                                if (!restaurantList.isEmpty) {
+                                    restaurantList.removeFirst()
+                                    print("Begone whore!")
+                                }
+                            })
                         }
                     }
-                    
-                }.gesture(DragGesture() .onChanged { value in
-                    if(self.getSwipeDirection(geometry, translation: value.translation) >= 0.5) {
-                        likeRestaurant = false
-                        print("Restaurant liked :)")
-                    } else if (self.getSwipeDirection(geometry, translation: value.translation) <= -0.5) {
-                        likeRestaurant = true
-                        print("Restaurant hated :(")
-                    }
-                    
-                }.onEnded { value in
-                    if(self.getSwipeDirection(geometry, translation: value.translation) > 0.5) {
-                        likedRestaurants.append(currentRestaurant)
-                    }
-                    
-                    if(index < restaurantList.count) {
-                        currentRestaurant = self.getNextRestaurant()
-                        index += 1
-                    }
-                    
-                })
+                }
             }
-        }
-        .onDisappear {
+        }.onDisappear {
             if (session.sessionCode != nil && self.creator) {
                 session.deleteSession()
             } else if (session.sessionCode != nil && !self.creator) {
                 session.leaveSession()
             }
         }.onAppear {
-            if (session.restaurantList?.results) != nil {
-                restaurantList = session.restaurantList!.results
-                currentRestaurant = self.getNextRestaurant()
-                index += 1
+            restaurantList = session.restaurantList?.results ?? []
+        }
+    }
+}
+
+struct RestaurantView: View {
+    var restaurant: Restaurant
+    var width: CGFloat
+    var height: CGFloat
+    
+    var body: some View {
+        if let photo = restaurant.photos?[0] {
+            VStack {
+                Text(restaurant.name)
+                PlaceReferenceImage(fromReference: photo.photoReference, width: photo.width, height: photo.height).frame(width: width, height: height * 0.75).clipped()
             }
+        } else {
+            Text(restaurant.name)
         }
     }
 }
