@@ -32,7 +32,9 @@ class SessionStore : ObservableObject {
     @Published var time = 5
     
     func removeTopCard() {
-        
+        withAnimation {
+            restaurantList?.results.removeLast()
+        }
     }
     
     func joinSession(joinCode: Int) {

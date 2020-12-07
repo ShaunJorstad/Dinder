@@ -69,32 +69,8 @@ struct LiveSession: View {
                     if restaurantList.count == 0 {
                         Text("Fuck off")
                     } else {
-                        ForEach(restaurantList, id: \.name) { restaurant in
-                            Group {
-                                GeometryReader { geometry in
-                                    VStack {
-                                        
-                                        RestaurantView(restaurant: restaurant, width: geometry.size.width, height: geometry.size.height)
-                                    }.gesture(DragGesture() .onChanged { value in
-                                        if(self.getSwipeDirection(geometry, translation: value.translation) >= 0.5) {
-                                            likeRestaurant = false
-                                            print("Restaurant hated :(")
-                                        } else if (self.getSwipeDirection(geometry, translation: value.translation) <= -0.5) {
-                                            likeRestaurant = true
-                                            print("Restaurant liked :)")
-                                        }
-                                    }.onEnded { value in
-                                        if(self.getSwipeDirection(geometry, translation: value.translation) > 0.5) {
-                                            likedRestaurants.append(restaurant)
-                                        }
-                                        
-                                        if (!restaurantList.isEmpty) {
-                                            restaurantList.removeFirst()
-                                            print("Begone whore!")
-                                        }
-                                    })
-                                }
-                            }
+                        ForEach(session.restaurantList?.results ?? [], id: \.name) { restaurant in
+                            RestaurantCard(restaurant: restaurant)
                         }
                     }
                 }.onDisappear {

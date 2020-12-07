@@ -9,12 +9,22 @@ import Foundation
 import SwiftUI
 
 struct RestaurantCard: View {
+    @EnvironmentObject var session: SessionStore
+    
+    private var name: String
+    
+    private var photo: PhotoReference?
     
     @State private var translation: CGSize = .zero
     @State private var swipeStatus: LikeDislike = .none
     private var thresholdPercentage: CGFloat = 0.2
     private enum LikeDislike: Int {
         case like, dislike, none
+    }
+    
+    init (restaurant: Restaurant) {
+        self.name = restaurant.name
+        self.photo = restaurant.photos?[0]
     }
     
     private func getGesturePercentage(_ geometry: GeometryProxy, from gesture: DragGesture.Value) -> CGFloat {
@@ -58,21 +68,17 @@ struct RestaurantCard: View {
                 
                 HStack {
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Restaurant title")
+                        Text("\(name)")
                             .font(.title)
                             .bold()
                     }
-                    Spacer()
                     
-                    Image(systemName: "info.circle")
-                        .foregroundColor(.gray)
                 }
                 .padding(.horizontal)
             }
             .padding(.bottom)
             .background(Color.white)
             .cornerRadius(10)
-            .shadow(radius: 5)
             .animation(.interactiveSpring())
             .offset(x: self.translation.width, y: 0)
             .rotationEffect(.degrees(Double(self.translation.width / geometry.size.width) * 25), anchor: .bottom)
@@ -91,7 +97,7 @@ struct RestaurantCard: View {
                         
                     }.onEnded { value in
                         if abs(self.getGesturePercentage(geometry, from: value)) > self.thresholdPercentage {
-//                            session.removeTopCard()
+                            session.removeTopCard()
                         } else {
                             self.translation = .zero
                         }
@@ -107,7 +113,7 @@ struct RestaurantCard: View {
 struct ResetaurantCard_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            RestaurantCard()
+//            RestaurantCard()
         }
     }
 }
