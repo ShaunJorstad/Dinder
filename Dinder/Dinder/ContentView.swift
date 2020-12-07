@@ -18,6 +18,9 @@ struct ContentView: View {
         Group {
             if (session.session != nil) {
                 HomeView()
+                    .onAppear(perform: {
+                        session.createdSession = false
+                    })
             } else {
                 SignInView()
             }

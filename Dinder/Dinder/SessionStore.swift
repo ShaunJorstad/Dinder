@@ -16,15 +16,19 @@ import CodableFirebase
 class SessionStore : ObservableObject {
     let db = Firestore.firestore()
     var didChange = PassthroughSubject<SessionStore, Never>()
+    var pushed = false
     @Published var session: User? { didSet { self.didChange.send(self) }}
     var handle: AuthStateDidChangeListenerHandle?
     @Published var sessionCode: Int? = nil
     @Published var numParticipants: Int = 0
     @Published var sessionLive = false
     @Published var result = ""
+    @Published var finished = false
     @Published var sessionError: String? = nil
     @Published var sessionDeleted = false
     @Published var restaurantList: RestaurantList? = nil
+    @Published var likedRestaurants = [Restaurant]()
+    @Published var createdSession = false
     
     func joinSession(joinCode: Int) {
         db.collection("Sessions").document("\(joinCode)").updateData([
@@ -82,12 +86,25 @@ class SessionStore : ObservableObject {
     
     func endSession() {
         db.collection("Sessions").document("\(sessionCode!)").updateData([
-            "live": false
+            "live": false,
+            "finished": true
         ])
     }
     
-    func calcResult() {
+    func calcResult(likes: [[String]]) {
         //TODO: calculate the result and push that to the database
+        var intersect: Set<String> = Set(likes[0])
+        
+        for list in likes {
+            let tmp: Set<String> = Set(list)
+            intersect = intersect.intersection(tmp)
+        }
+
+        let selection: String = intersect.randomElement() ?? "Error"
+        db.collection("Sessions").document("\(sessionCode!)").updateData([
+            "result": selection
+        ])
+        
     }
     
     func startSession() {
@@ -95,6 +112,18 @@ class SessionStore : ObservableObject {
             "live": true
         ])
         watchSession()
+    }
+    
+    func pushResults() {
+        if !pushed {
+            var results: [String] = [String]()
+            for restaurant in likedRestaurants {
+                results.append(restaurant.name)
+            }
+            db.collection("Sessions").document("\(sessionCode!)").updateData([
+                "likes": FieldValue.arrayUnion(results)
+            ])
+        }
     }
     
     func watchSession() {
@@ -136,6 +165,20 @@ class SessionStore : ObservableObject {
                         self.restaurantList = try? FirestoreDecoder().decode(RestaurantList.self, from: value)
                     }
                 }
+                if let finished = data["finished"] as? Bool {
+                    withAnimation {
+                        self.finished = finished
+                    }
+                    if finished == true {
+                        self.pushResults()
+                    }
+                }
+                if let likes = data["likes"] as? [[String]] {
+                    if likes.count == self.numParticipants && self.createdSession {
+                        self.calcResult(likes: likes)
+                    }
+                }
+                
             }
     }
     
@@ -161,16 +204,18 @@ class SessionStore : ObservableObject {
     
     func createSession() {
         self.sessionCode = Int.random(in: 1000...9999)
-        var likesDict: [String: [String]] = [:]
-        likesDict["\(session!.uid)"] = []
+//        var likesDict: [String: [String]] = [:]
+//        likesDict["\(session!.uid)"] = []
+        var likesArray: [[String]] = [[String]]()
         db.collection("Sessions").document("\(sessionCode!)").setData([
             "code": "\(sessionCode!)",
             "radius": 25,
             "time": 5,
-            "participants": 0,
+            "participants": 1,
             "live": false,
-            "likes": likesDict,
+            "likes": likesArray,
             "result": "",
+            "finished": false,
             "restaurantList": []
         ])
         watchSession()

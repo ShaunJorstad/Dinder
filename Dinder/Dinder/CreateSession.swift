@@ -78,7 +78,9 @@ struct CreateSession: View {
             if !session.sessionLive {
                 session.deleteSession()
             }
-        }
+        }.onAppear(perform: {
+            session.createdSession = true
+        })
     }
     
     func updateRestaurantList(list: RestaurantList?) {
