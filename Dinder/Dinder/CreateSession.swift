@@ -71,10 +71,10 @@ struct CreateSession: View {
                 }
             } else if session.sessionLive {
                 LiveSession(created: true)
+            } else if !session.sessionLive && session.result != "" {
+                ResultsView()
             }
-        }
-        //.onReceive(loadJsonFromBundle(filename: "response", fileExtension: "json"), perform: updateRestaurantList)
-        .onDisappear {
+        }.onDisappear {
             if !session.sessionLive {
                 session.deleteSession()
             }

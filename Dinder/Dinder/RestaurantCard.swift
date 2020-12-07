@@ -97,6 +97,7 @@ struct RestaurantCard: View {
                                 session.likeRestaurant(name: self.name)
                                 print("liked \(name)")
                             }
+                            
                             session.removeTopCard()
                         } else {
                             self.translation = .zero

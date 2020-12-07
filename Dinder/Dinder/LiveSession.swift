@@ -63,7 +63,7 @@ struct LiveSession: View {
             Group {
                 ZStack {
                     if restaurantList.count == 0 {
-                        Text("Fuck off")
+                        Text("No restaurants found within the radius")
                     } else {
                         ForEach(session.restaurantList?.results ?? [], id: \.name) { restaurant in
                             RestaurantCard(restaurant: restaurant).background(Color.white)

@@ -38,6 +38,8 @@ struct JoinSession: View {
                     .dinderTitleStyle()
             } else if (session.sessionCode != nil && session.sessionLive) {
                 LiveSession(created: false)
+            } else if(session.sessionCode != nil && !session.sessionLive && session.result != "") {
+                ResultsView()
             }
         }
         .onDisappear {
