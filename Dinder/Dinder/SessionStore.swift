@@ -29,6 +29,11 @@ class SessionStore : ObservableObject {
     @Published var restaurantList: RestaurantList? = nil
     @Published var likedRestaurants = [Restaurant]()
     @Published var createdSession = false
+    @Published var time = 5
+    
+    func removeTopCard() {
+        
+    }
     
     func joinSession(joinCode: Int) {
         db.collection("Sessions").document("\(joinCode)").updateData([
@@ -99,7 +104,7 @@ class SessionStore : ObservableObject {
             let tmp: Set<String> = Set(list)
             intersect = intersect.intersection(tmp)
         }
-
+        
         let selection: String = intersect.randomElement() ?? "Error"
         db.collection("Sessions").document("\(sessionCode!)").updateData([
             "result": selection
@@ -129,20 +134,20 @@ class SessionStore : ObservableObject {
     func watchSession() {
         db.collection("Sessions").document("\(sessionCode!)")
             .addSnapshotListener { documentSnapshot, error in
-              guard let document = documentSnapshot else {
-                print("Error fetching document: \(error!)")
-                return
-              }
-              guard let data = document.data() else {
-                withAnimation {
-                    self.sessionCode = nil
-                    self.numParticipants = 0
-                    self.result = ""
-                    self.sessionError = "Session deleted"
-                    self.sessionDeleted = true
+                guard let document = documentSnapshot else {
+                    print("Error fetching document: \(error!)")
+                    return
                 }
-                return
-              }
+                guard let data = document.data() else {
+                    withAnimation {
+                        self.sessionCode = nil
+                        self.numParticipants = 0
+                        self.result = ""
+                        self.sessionError = "Session deleted"
+                        self.sessionDeleted = true
+                    }
+                    return
+                }
                 
                 print("Current data: \(data["live"] ?? "did not exist")")
                 if let live = data["live"], live as! Bool != self.sessionLive {
@@ -178,7 +183,11 @@ class SessionStore : ObservableObject {
                         self.calcResult(likes: likes)
                     }
                 }
-                
+                if let time = data["time"] as? Int {
+                    withAnimation {
+                        self.time = time
+                    }
+                }
             }
     }
     
@@ -204,8 +213,8 @@ class SessionStore : ObservableObject {
     
     func createSession() {
         self.sessionCode = Int.random(in: 1000...9999)
-//        var likesDict: [String: [String]] = [:]
-//        likesDict["\(session!.uid)"] = []
+        //        var likesDict: [String: [String]] = [:]
+        //        likesDict["\(session!.uid)"] = []
         var likesArray: [[String]] = [[String]]()
         db.collection("Sessions").document("\(sessionCode!)").setData([
             "code": "\(sessionCode!)",
@@ -224,7 +233,7 @@ class SessionStore : ObservableObject {
     func getEmail() -> String {
         return session?.email ?? "no specified user"
     }
-
+    
     func listen () {
         // monitor authentication changes using firebase
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
@@ -244,32 +253,32 @@ class SessionStore : ObservableObject {
     }
     
     func signUp(
-            email: String,
-            password: String,
-            handler: @escaping AuthDataResultCallback
-            ) {
-            Auth.auth().createUser(withEmail: email, password: password, completion: handler)
-        }
-
+        email: String,
+        password: String,
+        handler: @escaping AuthDataResultCallback
+    ) {
+        Auth.auth().createUser(withEmail: email, password: password, completion: handler)
+    }
+    
     func signIn(
         email: String,
         password: String,
         handler: @escaping AuthDataResultCallback
-        ) {
+    ) {
         Auth.auth().signIn(withEmail: email, password: password, completion: handler)
     }
     
     func sendPasswordResetEmail(
         email: String,
         handler: @escaping (Error?) -> Void
-        ) {
+    ) {
         Auth.auth().sendPasswordReset(withEmail: email, completion: handler)
         if (!signOut()) {
             sessionError = "could not sign out"
         }
         
     }
-
+    
     func signOut () -> Bool {
         do {
             try Auth.auth().signOut()
@@ -301,10 +310,10 @@ class SessionStore : ObservableObject {
 class User {
     var uid: String
     var email: String?
-
+    
     init(uid: String, email: String?) {
         self.uid = uid
         self.email = email
     }
-
+    
 }
