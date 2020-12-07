@@ -16,6 +16,7 @@
 		A36BF588257C362100F98B44 /* Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36BF587257C362100F98B44 /* Json.swift */; };
 		A36BF5C7257C904400F98B44 /* PlaceReferenceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36BF5C6257C904400F98B44 /* PlaceReferenceImage.swift */; };
 		C0515A0E257E92ED00721C1B /* appstore.png in Resources */ = {isa = PBXBuildFile; fileRef = C0515A0D257E92ED00721C1B /* appstore.png */; };
+		C0515A23257EC3B000721C1B /* RestaurantCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0515A22257EC3B000721C1B /* RestaurantCard.swift */; };
 		C071818B2554CB7C007A39FF /* CreateSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C071818A2554CB7C007A39FF /* CreateSession.swift */; };
 		C07181902554CDD9007A39FF /* DinderButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C071818F2554CDD9007A39FF /* DinderButtonStyle.swift */; };
 		C08AC69D2555B2F500A47AA9 /* JoinSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08AC69C2555B2F500A47AA9 /* JoinSession.swift */; };
@@ -65,6 +66,7 @@
 		A36BF587257C362100F98B44 /* Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
 		A36BF5C6257C904400F98B44 /* PlaceReferenceImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReferenceImage.swift; sourceTree = "<group>"; };
 		C0515A0D257E92ED00721C1B /* appstore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appstore.png; path = icons/appstore.png; sourceTree = SOURCE_ROOT; };
+		C0515A22257EC3B000721C1B /* RestaurantCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCard.swift; sourceTree = "<group>"; };
 		C071818A2554CB7C007A39FF /* CreateSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSession.swift; sourceTree = "<group>"; };
 		C071818F2554CDD9007A39FF /* DinderButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinderButtonStyle.swift; sourceTree = "<group>"; };
 		C08AC69C2555B2F500A47AA9 /* JoinSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinSession.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				C0EABA15254FB93D00A701C0 /* SceneDelegate.swift */,
 				C0EABA17254FB93D00A701C0 /* ContentView.swift */,
 				C0E2CD322555D5C000EDD986 /* LiveSession.swift */,
+				C0515A22257EC3B000721C1B /* RestaurantCard.swift */,
 				C08AC69C2555B2F500A47AA9 /* JoinSession.swift */,
 				C071818A2554CB7C007A39FF /* CreateSession.swift */,
 				C091F14E254FC46A00C3D983 /* Account.swift */,
@@ -472,6 +475,7 @@
 			files = (
 				C071818B2554CB7C007A39FF /* CreateSession.swift in Sources */,
 				A320752D2555E321000C9EED /* DinderTextFieldStyle.swift in Sources */,
+				C0515A23257EC3B000721C1B /* RestaurantCard.swift in Sources */,
 				C0EABA14254FB93D00A701C0 /* AppDelegate.swift in Sources */,
 				C08AC69D2555B2F500A47AA9 /* JoinSession.swift in Sources */,
 				C0EABA16254FB93D00A701C0 /* SceneDelegate.swift in Sources */,
