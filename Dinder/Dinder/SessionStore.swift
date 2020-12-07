@@ -27,7 +27,7 @@ class SessionStore : ObservableObject {
     @Published var sessionError: String? = nil
     @Published var sessionDeleted = false
     @Published var restaurantList: RestaurantList? = nil
-    @Published var likedRestaurants = [Restaurant]()
+    @Published var likedRestaurants = [String]()
     @Published var createdSession = false
     @Published var time = 5
     
@@ -35,6 +35,10 @@ class SessionStore : ObservableObject {
         withAnimation {
             restaurantList?.results.removeLast()
         }
+    }
+    
+    func likeRestaurant(name: String) {
+        likedRestaurants.append(name)
     }
     
     func joinSession(joinCode: Int) {
@@ -123,12 +127,8 @@ class SessionStore : ObservableObject {
     
     func pushResults() {
         if !pushed {
-            var results: [String] = [String]()
-            for restaurant in likedRestaurants {
-                results.append(restaurant.name)
-            }
             db.collection("Sessions").document("\(sessionCode!)").updateData([
-                "likes": FieldValue.arrayUnion(results)
+                "likes": FieldValue.arrayUnion(likedRestaurants)
             ])
         }
     }
