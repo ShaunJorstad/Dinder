@@ -33,7 +33,7 @@ struct JoinSession: View {
                     }
                     Spacer()
                 }.buttonStyle(DinderButtonStyle())
-            } else if (session.sessionCode != nil && !session.sessionLive) {
+            } else if (session.sessionCode != nil && !session.sessionLive || session.sessionCode != nil && session.sessionLive && session.restaurantList == nil) {
                 Text("Waiting for session to start")
                     .dinderTitleStyle()
             } else if (session.sessionCode != nil && session.sessionLive) {
