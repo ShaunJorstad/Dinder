@@ -23,10 +23,6 @@ struct LiveSession: View {
         self.creator = created
     }
     
-    func getSwipeDirection(_ geometry: GeometryProxy, translation: CGSize) -> CGFloat {
-        return translation.width / geometry.size.width
-    }
-    
     var body: some View {
         VStack {
             Spacer()
@@ -88,23 +84,6 @@ struct LiveSession: View {
         }.onAppear(perform: {
             self.timeRemaining = session.time * 60
         })
-    }
-}
-
-struct RestaurantView: View {
-    var restaurant: Restaurant
-    var width: CGFloat
-    var height: CGFloat
-    
-    var body: some View {
-        if let photo = restaurant.photos?[0] {
-            VStack {
-                Text(restaurant.name)
-                PlaceReferenceImage(fromReference: photo.photoReference, width: photo.width, height: photo.height).frame(width: width, height: height * 0.75).clipped()
-            }
-        } else {
-            Text(restaurant.name)
-        }
     }
 }
 
