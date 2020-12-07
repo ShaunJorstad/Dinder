@@ -91,7 +91,7 @@ struct RestaurantCard: View {
                         
                     }.onEnded { value in
                         if abs(self.getGesturePercentage(geometry, from: value)) > self.thresholdPercentage {
-                            session.removeTopCard()
+//                            session.removeTopCard()
                         } else {
                             self.translation = .zero
                         }
