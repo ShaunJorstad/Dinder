@@ -15,6 +15,7 @@
 		A36BF57C257C171800F98B44 /* response.json in Resources */ = {isa = PBXBuildFile; fileRef = A36BF57B257C171800F98B44 /* response.json */; };
 		A36BF588257C362100F98B44 /* Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36BF587257C362100F98B44 /* Json.swift */; };
 		A36BF5C7257C904400F98B44 /* PlaceReferenceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36BF5C6257C904400F98B44 /* PlaceReferenceImage.swift */; };
+		C0515A0E257E92ED00721C1B /* appstore.png in Resources */ = {isa = PBXBuildFile; fileRef = C0515A0D257E92ED00721C1B /* appstore.png */; };
 		C071818B2554CB7C007A39FF /* CreateSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C071818A2554CB7C007A39FF /* CreateSession.swift */; };
 		C07181902554CDD9007A39FF /* DinderButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C071818F2554CDD9007A39FF /* DinderButtonStyle.swift */; };
 		C08AC69D2555B2F500A47AA9 /* JoinSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08AC69C2555B2F500A47AA9 /* JoinSession.swift */; };
@@ -63,6 +64,7 @@
 		A36BF57B257C171800F98B44 /* response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = response.json; sourceTree = "<group>"; };
 		A36BF587257C362100F98B44 /* Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
 		A36BF5C6257C904400F98B44 /* PlaceReferenceImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReferenceImage.swift; sourceTree = "<group>"; };
+		C0515A0D257E92ED00721C1B /* appstore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appstore.png; path = icons/appstore.png; sourceTree = SOURCE_ROOT; };
 		C071818A2554CB7C007A39FF /* CreateSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSession.swift; sourceTree = "<group>"; };
 		C071818F2554CDD9007A39FF /* DinderButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinderButtonStyle.swift; sourceTree = "<group>"; };
 		C08AC69C2555B2F500A47AA9 /* JoinSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinSession.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				C091F144254FBAF900C3D983 /* SessionStore.swift */,
 				C091F13F254FBA0900C3D983 /* GoogleService-Info.plist */,
 				C0EABA19254FB93F00A701C0 /* Assets.xcassets */,
+				C0515A0D257E92ED00721C1B /* appstore.png */,
 				C0EABA1E254FB93F00A701C0 /* LaunchScreen.storyboard */,
 				C0EABA21254FB93F00A701C0 /* Info.plist */,
 				C0EABA1B254FB93F00A701C0 /* Preview Content */,
@@ -335,6 +338,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0EABA20254FB93F00A701C0 /* LaunchScreen.storyboard in Resources */,
+				C0515A0E257E92ED00721C1B /* appstore.png in Resources */,
 				A36BF57C257C171800F98B44 /* response.json in Resources */,
 				C091F140254FBA0900C3D983 /* GoogleService-Info.plist in Resources */,
 				C0EABA1D254FB93F00A701C0 /* Preview Assets.xcassets in Resources */,
