@@ -70,7 +70,7 @@ struct LiveSession: View {
                         Text("Fuck off")
                     } else {
                         ForEach(session.restaurantList?.results ?? [], id: \.name) { restaurant in
-                            RestaurantCard(restaurant: restaurant)
+                            RestaurantCard(restaurant: restaurant).background(Color.white)
                         }
                     }
                 }.onDisappear {

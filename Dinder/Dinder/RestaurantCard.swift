@@ -13,7 +13,7 @@ struct RestaurantCard: View {
     
     private var name: String
     
-    private var photo: PhotoReference?
+    private var photo: PhotoReference
     
     @State private var translation: CGSize = .zero
     @State private var swipeStatus: LikeDislike = .none
@@ -24,7 +24,7 @@ struct RestaurantCard: View {
     
     init (restaurant: Restaurant) {
         self.name = restaurant.name
-        self.photo = restaurant.photos?[0]
+        self.photo = restaurant.photos![0]
     }
     
     private func getGesturePercentage(_ geometry: GeometryProxy, from gesture: DragGesture.Value) -> CGFloat {
@@ -35,11 +35,7 @@ struct RestaurantCard: View {
         GeometryReader { geometry in
             VStack(alignment: .leading) {
                 ZStack(alignment: self.swipeStatus == .like ? .topLeading : .topTrailing) {
-                    Image("Doggo")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: geometry.size.width, height: geometry.size.height * 0.6)
-                        .clipped()
+                    PlaceReferenceImage(fromReference: photo.photoReference, width: photo.width, height: photo.height).frame(width: geometry.size.width, height: geometry.size.height * 0.6).clipped()
                     
                     if self.swipeStatus == .like {
                         Text("LIKE")
