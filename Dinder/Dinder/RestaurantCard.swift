@@ -97,6 +97,10 @@ struct RestaurantCard: View {
                         
                     }.onEnded { value in
                         if abs(self.getGesturePercentage(geometry, from: value)) > self.thresholdPercentage {
+                            if self.swipeStatus == .like {
+                                session.likeRestaurant(name: self.name)
+                                print("liked \(name)")
+                            }
                             session.removeTopCard()
                         } else {
                             self.translation = .zero
