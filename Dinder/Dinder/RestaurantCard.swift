@@ -13,6 +13,11 @@ struct RestaurantCard: View {
     @State private var translation: CGSize = .zero
     @State private var swipeStatus: LikeDislike = .none
     private var thresholdPercentage: CGFloat = 0.2
+    
+//    init(Restaurant: restaurant) {
+//        //define state variables
+//    }
+    
     private enum LikeDislike: Int {
         case like, dislike, none
     }
@@ -62,10 +67,6 @@ struct RestaurantCard: View {
                             .font(.title)
                             .bold()
                     }
-                    Spacer()
-                    
-                    Image(systemName: "info.circle")
-                        .foregroundColor(.gray)
                 }
                 .padding(.horizontal)
             }
