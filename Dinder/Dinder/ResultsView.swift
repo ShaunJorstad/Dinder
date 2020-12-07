@@ -11,8 +11,7 @@ import SwiftUI
 struct ResultsView: View {
     @EnvironmentObject var session: SessionStore
     
-    @State var restaurant: Restaurant
-    @State var name: String
+    @State var restaurant: Restaurant = Restaurant(name: "", geometry: .init(location: Location(lat: 0.0, lng: 0.0)), vicinity: "")
     
     func getResultingRestaurant() -> Restaurant {
         if let currentList = session.restaurantList?.results {
@@ -29,12 +28,12 @@ struct ResultsView: View {
     var body: some View {
         VStack {
             GeometryReader { geometry in
-                if(name != "") {
+                if(session.result == restaurant.name) {
                     if let photo = restaurant.photos?[0] {
                         PlaceReferenceImage(fromReference: photo.photoReference, width: photo.width, height: photo.height).frame(width: geometry.size.width, height: geometry.size.height * 0.6).clipped()
                     }
                     
-                    Text("\(name)")
+                    Text("\(session.result)")
                     
                 } else {
                     Text("\(session.result)")
@@ -43,10 +42,6 @@ struct ResultsView: View {
             
         }.onAppear {
             restaurant = getResultingRestaurant()
-            
-            if(restaurant.name == session.result) {
-                name = session.result
-            }
         }
     }
 }

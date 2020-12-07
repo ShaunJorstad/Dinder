@@ -74,6 +74,7 @@ struct CreateSession: View {
             } else if !session.sessionLive && session.result != "" {
                 ResultsView()
             }
+            
         }.onDisappear {
             if !session.sessionLive {
                 session.deleteSession()
