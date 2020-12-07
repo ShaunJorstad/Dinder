@@ -73,7 +73,7 @@ struct CreateSession: View {
                 LiveSession(created: true)
             }
         }
-        .onReceive(loadJsonFromBundle(filename: "response", fileExtension: "json"), perform: updateRestaurantList)
+        //.onReceive(loadJsonFromBundle(filename: "response", fileExtension: "json"), perform: updateRestaurantList)
         .onDisappear {
             if !session.sessionLive {
                 session.deleteSession()
@@ -95,8 +95,8 @@ struct CreateSession: View {
         session.updateSessionRadius(radius: radius)
         session.startSession()
         
-        //Uncomment to use acutal location
-        //fetchRestaurants()
+        //Uncomment to use actual location
+        fetchRestaurants()
     }
     
     func fetchRestaurants() {
