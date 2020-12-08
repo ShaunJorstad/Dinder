@@ -69,12 +69,6 @@ struct LiveSession: View {
                             RestaurantCard(restaurant: restaurant).background(Color.white)
                         }
                     }
-                }.onDisappear {
-                    if (session.sessionCode != nil && self.creator) {
-                        session.deleteSession()
-                    } else if (session.sessionCode != nil && !self.creator) {
-                        session.leaveSession()
-                    }
                 }.onAppear {
                     restaurantList = session.restaurantList?.results ?? []
                 }

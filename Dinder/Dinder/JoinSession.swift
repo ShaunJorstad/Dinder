@@ -18,7 +18,7 @@ struct JoinSession: View {
     
     var body: some View {
         Group {
-            if (session.sessionCode == nil){
+            if (session.sessionCode == nil && session.result == ""){
                 VStack {
                     Spacer()
                     Text("Enter Code")
@@ -33,10 +33,10 @@ struct JoinSession: View {
                     }
                     Spacer()
                 }.buttonStyle(DinderButtonStyle())
-            } else if (session.sessionCode != nil && !session.sessionLive || session.sessionCode != nil && session.sessionLive && session.restaurantList == nil) {
+            } else if (session.sessionCode != nil && !session.sessionLive && session.result == "" || session.sessionCode != nil && session.sessionLive && session.restaurantList == nil && session.result == "") {
                 Text("Waiting for session to start")
                     .dinderTitleStyle()
-            } else if (session.sessionCode != nil && session.sessionLive) {
+            } else if (session.sessionCode != nil && session.sessionLive && session.result == "") {
                 LiveSession(created: false)
             } else if (session.sessionCode != nil && !session.sessionLive && session.result != "") {
                 ResultsView()

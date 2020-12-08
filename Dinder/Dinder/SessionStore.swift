@@ -30,6 +30,7 @@ class SessionStore : ObservableObject {
     @Published var likedRestaurants = [String]()
     @Published var createdSession = false
     @Published var time = 5
+    var likes = [String: [String]]()
     
     func removeTopCard() {
         withAnimation {
@@ -102,20 +103,24 @@ class SessionStore : ObservableObject {
         ])
     }
     
-    func calcResult(likes: [[String]]) {
+    func calcResult() {
         //TODO: calculate the result and push that to the database
-        var intersect: Set<String> = Set(likes[0])
-        
-        for list in likes {
-            let tmp: Set<String> = Set(list)
-            intersect = intersect.intersection(tmp)
+        var strings: [Set<String>] = [Set<String>]()
+
+        for (key, values) in likes {
+            strings.append(Set(values))
         }
         
-        let selection: String = intersect.randomElement() ?? "Error"
+        for string in strings {
+            strings[0] = strings[0].intersection(string)
+        }
+        
+
+        let selection: String = strings[0].randomElement() ?? "Error"
         db.collection("Sessions").document("\(sessionCode!)").updateData([
             "result": selection
         ])
-        
+
     }
     
     func startSession() {
@@ -127,8 +132,11 @@ class SessionStore : ObservableObject {
     
     func pushResults() {
         if !pushed {
+            print("pushing to database")
+            pushed = true
             db.collection("Sessions").document("\(sessionCode!)").updateData([
-                "likes": FieldValue.arrayUnion(likedRestaurants)
+                "likes.\(session!.uid)": likedRestaurants,
+                "finishedPushing": FieldValue.increment(Int64(1))
             ])
         }
     }
@@ -165,6 +173,7 @@ class SessionStore : ObservableObject {
                 if let result = data["result"], result as! String != "" {
                     withAnimation {
                         self.result = result as! String
+                        print("received result!: \(result)")
                     }
                 }
                 if let value = data["restaurantList"] as? [String: Any] {
@@ -180,9 +189,12 @@ class SessionStore : ObservableObject {
                         self.pushResults()
                     }
                 }
-                if let likes = data["likes"] as? [[String]] {
-                    if likes.count == self.numParticipants && self.createdSession {
-                        self.calcResult(likes: likes)
+                if let likes = data["likes"] as? [String: [String]] {
+                    self.likes = likes
+                }
+                if let finishedPushing = data["finishedPushing"] as? Int {
+                    if finishedPushing == self.numParticipants && self.createdSession && self.result == "" {
+                        self.calcResult()
                     }
                 }
                 if let time = data["time"] as? Int {
@@ -215,19 +227,21 @@ class SessionStore : ObservableObject {
     
     func createSession() {
         self.sessionCode = Int.random(in: 1000...9999)
-        //        var likesDict: [String: [String]] = [:]
-        //        likesDict["\(session!.uid)"] = []
-        var likesArray: [[String]] = [[String]]()
+        var likesDict: [String: [String]] = [:]
+//        var likesDict: [String: Int] = [:]
+        likesDict["\(session!.uid)"] = []
+//        var likesArray: [[String]] = [[String]]()
         db.collection("Sessions").document("\(sessionCode!)").setData([
             "code": "\(sessionCode!)",
             "radius": 25,
             "time": 5,
             "participants": 1,
             "live": false,
-            "likes": likesArray,
+            "likes": likesDict,
             "result": "",
             "finished": false,
-            "restaurantList": []
+            "restaurantList": [],
+            "finishedPushing": 0,
         ])
         watchSession()
     }

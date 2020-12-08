@@ -61,15 +61,15 @@ struct CreateSession: View {
     
     var body: some View {
         Group {
-            if !session.sessionLive {
+            if !session.sessionLive && session.result == "" {
                 form
-            } else if session.sessionLive && session.restaurantList == nil {
+            } else if session.sessionLive && session.restaurantList == nil && session.result == "" {
                 VStack {
                     Text("Fetching Restaraunt List")
                         .dinderTitleStyle()
                     ProgressView()
                 }
-            } else if session.sessionLive {
+            } else if session.sessionLive && session.restaurantList != nil && session.result == "" {
                 LiveSession(created: true)
             } else if !session.sessionLive && session.result != "" {
                 ResultsView()
