@@ -72,7 +72,7 @@ struct CreateSession: View {
             } else if session.sessionLive && session.restaurantList != nil && session.result == "" {
                 LiveSession(created: true)
             } else if !session.sessionLive && session.result != "" {
-                ResultsView()
+                Text("You all chose: \(session.result)").dinderTitleStyle()
             }
             
         }.onDisappear {

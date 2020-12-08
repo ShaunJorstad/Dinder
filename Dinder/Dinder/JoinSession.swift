@@ -39,7 +39,7 @@ struct JoinSession: View {
             } else if (session.sessionCode != nil && session.sessionLive && session.result == "") {
                 LiveSession(created: false)
             } else if (session.sessionCode != nil && !session.sessionLive && session.result != "") {
-                ResultsView()
+                Text("You all chose: \(session.result)").dinderTitleStyle()
             }
         }
         .onDisappear {

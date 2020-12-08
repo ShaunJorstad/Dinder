@@ -105,7 +105,7 @@ class SessionStore : ObservableObject {
         //TODO: calculate the result and push that to the database
         var strings: [Set<String>] = [Set<String>]()
 
-        for (key, values) in likes {
+        for (_, values) in likes {
             strings.append(Set(values))
         }
         
