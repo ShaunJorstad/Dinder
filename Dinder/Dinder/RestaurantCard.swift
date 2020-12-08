@@ -4,6 +4,7 @@
 //
 //  Created by Shaun Jorstad on 12/7/20.
 //
+//  Some source code for the tinder like card replicated from Brandon Baars
 
 import Foundation
 import SwiftUI
