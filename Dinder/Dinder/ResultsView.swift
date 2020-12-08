@@ -35,6 +35,17 @@ struct ResultsView: View {
                     
                     Text("\(session.result)")
                     
+                    Button(action: {
+                        if let phoneCallURL = URL(string: "tel://\(restaurant.name)") {
+                            let application:UIApplication = UIApplication.shared
+                            if(application.canOpenURL(phoneCallURL)) {
+                                application.open(phoneCallURL, options: [:], completionHandler: nil)
+                            }
+                        }
+                    }) {
+                        Text("Call")
+                    }
+                    
                 } else {
                     Text("\(session.result)")
                 }

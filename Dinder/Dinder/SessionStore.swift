@@ -33,9 +33,7 @@ class SessionStore : ObservableObject {
     var likes = [String: [String]]()
     
     func removeTopCard() {
-        withAnimation {
-            restaurantList?.results.removeLast()
-        }
+        restaurantList?.results.removeLast()
     }
     
     func likeRestaurant(name: String) {
@@ -227,10 +225,12 @@ class SessionStore : ObservableObject {
     
     func createSession() {
         self.sessionCode = Int.random(in: 1000...9999)
+
         var likesDict: [String: [String]] = [:]
 //        var likesDict: [String: Int] = [:]
         likesDict["\(session!.uid)"] = []
 //        var likesArray: [[String]] = [[String]]()
+
         db.collection("Sessions").document("\(sessionCode!)").setData([
             "code": "\(sessionCode!)",
             "radius": 25,
